@@ -66,13 +66,14 @@ export function AcButton({
   ...props
 }: AcButtonProps) {
   const scale = sizes[size]
+  const iconOnly = !hasLabel(children)
   return (
     <button
       type={type}
       className={clsx(
         base,
         scale.button,
-        hasLabel(children) ? scale.label : square,
+        { [scale.label]: !iconOnly, [square]: iconOnly },
         variants[variant],
         className,
       )}
