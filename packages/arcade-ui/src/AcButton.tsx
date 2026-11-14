@@ -1,5 +1,6 @@
 import { clsx } from 'clsx'
 import { Children, type ComponentProps, type ReactNode } from 'react'
+import { AcIcon } from './AcIcon'
 
 export const acButtonVariants = ['primary', 'ghost', 'danger'] as const
 export type AcButtonVariant = (typeof acButtonVariants)[number]
@@ -54,10 +55,6 @@ function hasLabel(children: ReactNode) {
   return Children.toArray(children).some((child) => child !== '')
 }
 
-function ButtonIcon({ name, className }: { name: string; className: string }) {
-  return <i className={clsx('ti', `ti-${name}`, className)} aria-hidden />
-}
-
 export function AcButton({
   variant = 'primary',
   size = 'md',
@@ -81,9 +78,9 @@ export function AcButton({
       )}
       {...props}
     >
-      {prefix && <ButtonIcon name={prefix} className={scale.icon} />}
+      {prefix && <AcIcon name={prefix} className={scale.icon} />}
       {children}
-      {suffix && <ButtonIcon name={suffix} className={scale.icon} />}
+      {suffix && <AcIcon name={suffix} className={scale.icon} />}
     </button>
   )
 }
