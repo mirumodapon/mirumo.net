@@ -5,6 +5,7 @@ packages:
 catalog:
   '@storybook/addon-docs': ^10.6.7
   '@storybook/react-vite': ^10.6.7
+  '@tabler/icons-webfont': ^3.51.0
   '@tailwindcss/vite': ^4.3.5
   '@types/react': ^19.3.0
   '@types/react-dom': ^19.3.0

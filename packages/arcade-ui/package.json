@@ -10,6 +10,10 @@
   "scripts": {
     "typecheck": "tsc"
   },
+  "dependencies": {
+    "@tabler/icons-webfont": "catalog:",
+    "clsx": "catalog:"
+  },
   "devDependencies": {
     "@types/react": "catalog:",
     "react": "catalog:",
@@ -18,8 +22,5 @@
   "peerDependencies": {
     "react": "^19.0.0",
     "tailwindcss": "^4.3.0"
-  },
-  "dependencies": {
-    "clsx": "catalog:"
   }
 }

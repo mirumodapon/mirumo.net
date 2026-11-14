@@ -18,6 +18,15 @@
  */
 @import 'tailwindcss' prefix(ac);
 
+/*
+ * Tabler icons as a webfont: any icon renders as `ti ti-<name>`. The font is
+ * split by category with unicode-range, so browsers only fetch the parts a
+ * page actually uses. It sits in the components layer so `ac:` utilities
+ * (utilities layer) override it, except font-family: `.ti` declares that
+ * !important, and an !important in an earlier layer beats every later one.
+ */
+@import '@tabler/icons-webfont/dist/tabler-icons.min.css' layer(components);
+
 @source './';
 
 @theme static {
@@ -44,6 +53,7 @@
 
   --radius-maze: 12px;
   --radius-tile: 10px;
+  --radius-button: 6px;
 
   /* Double-line neon maze wall: outer line, gap, inner line, glow. */
   --shadow-maze:
