@@ -1,11 +1,20 @@
 {
   "name": "mirumo-net",
   "private": true,
-  "packageManager": "pnpm@12.5.1",
+  "scripts": {
+    "lint": "oxlint --no-error-on-unmatched-pattern",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "test": "pnpm -r --if-present test"
+  },
+  "devDependencies": {
+    "oxfmt": "^0.78.0",
+    "oxlint": "^1.93.0",
+    "typescript": "^7.0.2"
+  },
   "engines": {
     "node": ">=24"
   },
-  "scripts": {
-    "test": "pnpm -r --if-present test"
-  }
+  "packageManager": "pnpm@12.5.1"
 }
