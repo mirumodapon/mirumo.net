@@ -1,0 +1,5 @@
+@import 'tailwindcss';
+@import '@mirumo/themes';
+
+/* Generate the utilities used inside the UI package's components. */
+@source '../node_modules/@mirumo/arcade-ui/src';

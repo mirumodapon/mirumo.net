@@ -1,0 +1,15 @@
+{
+  "name": "@mirumo/themes",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "style": "./src/index.css",
+      "default": "./src/index.css"
+    }
+  },
+  "peerDependencies": {
+    "tailwindcss": "^4.3.0"
+  }
+}
