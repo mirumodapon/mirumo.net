@@ -1,9 +1,0 @@
-/*
- * Design tokens for @mirumo/themes.
- *
- * Define tokens inside @theme; Tailwind turns each into a CSS variable and a
- * utility (e.g. --color-brand -> bg-brand, text-brand). `static` emits every
- * variable even when no utility uses it yet.
- */
-@theme static {
-}

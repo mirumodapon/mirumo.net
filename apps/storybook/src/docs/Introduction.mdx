@@ -22,8 +22,10 @@ pnpm --filter @mirumo/storybook build
 
 所有檔案都放在 `apps/storybook/src/` 底下，Storybook 會自動找到：
 
-- **文件頁**：`*.mdx`，說明、指南等純文件頁面
+- **文件頁**：`*.mdx`，說明、指南等純文件頁面，放在 `docs/`
 - **Story**：`*.stories.ts(x)`，展示元件的各種狀態
+
+`@mirumo/arcade-ui` 相關的 story 都放在 `arcade/`；樣式由 `.storybook/preview.ts` 直接引用 `@mirumo/arcade-ui/index.css`。
 
 ## 依賴版本
 

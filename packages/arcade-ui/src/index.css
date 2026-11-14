@@ -1,0 +1,80 @@
+/*
+ * @mirumo/arcade-ui stylesheet: the single CSS entry consumers import.
+ *
+ * It owns the whole Tailwind setup for arcade UI, so consumers only need
+ * `import '@mirumo/arcade-ui/index.css'`:
+ * - Tailwind runs with `prefix(ac)`: utilities read `ac:bg-wall`, variables
+ *   read `--ac-color-wall`.
+ * - @source scans this package's own src for the classes components use.
+ * - @theme holds the retro-arcade maze design tokens.
+ *
+ * Rules for keeping the prefix intact:
+ * - Reference another token with --theme(--color-x), never var(--color-x):
+ *   --theme() resolves to the prefixed name (var(--ac-color-x)).
+ * - Tailwind does not prefix @keyframes names, so they carry `ac-` by hand.
+ *
+ * `static` emits every variable even when no utility uses it yet, so
+ * components can always rely on them.
+ */
+@import 'tailwindcss' prefix(ac);
+
+@source './';
+
+@theme static {
+  /* Board */
+  --color-surface: #05050f;
+  --color-field: #0c0c22;
+  --color-ink: #f2f2ff;
+  --color-muted: #8a8fc7;
+  --color-wall: #2d3cff;
+  --color-wall-glow: rgb(45 60 255 / 0.55);
+  --color-pellet: #ffd9b3;
+
+  /* Accents */
+  --color-primary: #ffd23f;
+  --color-secondary: #ff7ad9;
+  --color-info: #38e8ff;
+  --color-warning: #ffa040;
+  --color-danger: #ff4b4b;
+  --color-brick: #a3401b;
+
+  /* Pixel font first; Noto Sans TC covers the CJK glyphs it lacks. */
+  --font-pixel: 'Press Start 2P', 'Noto Sans TC', ui-monospace, monospace;
+  --font-body: 'Noto Sans TC', system-ui, sans-serif;
+
+  --radius-maze: 12px;
+  --radius-tile: 10px;
+
+  /* Double-line neon maze wall: outer line, gap, inner line, glow. */
+  --shadow-maze:
+    inset 0 0 0 5px --theme(--color-surface), inset 0 0 0 7px --theme(--color-wall),
+    0 0 18px --theme(--color-wall-glow), inset 0 0 18px --theme(--color-wall-glow);
+  --shadow-pellet: 0 0 10px --theme(--color-pellet);
+  --shadow-marker: 0 0 10px --theme(--color-primary);
+
+  --text-shadow-glow: 0 0 16px rgb(255 210 63 / 0.45);
+  --text-shadow-marquee: 0 0 12px rgb(255 210 63 / 0.5), 3px 3px 0 --theme(--color-brick);
+
+  /* Board glow behind the page, faint CRT scanlines, and a row of pellets. */
+  --background-image-board: radial-gradient(ellipse at top, rgb(45 60 255 / 0.14), transparent 60%);
+  --background-image-scanlines: repeating-linear-gradient(
+    to bottom,
+    rgb(255 255 255 / 0.025) 0 1px,
+    transparent 1px 3px
+  );
+  --background-image-pellets: radial-gradient(
+    circle,
+    --theme(--color-pellet) 2.5px,
+    transparent 3px
+  );
+
+  /* Gentle fades only: the theme avoids hard on/off blinking. */
+  --animate-pulse-soft: ac-pulse-soft 3s ease-in-out infinite;
+  --animate-pulse-text: ac-pulse-soft 2s ease-in-out infinite;
+
+  @keyframes ac-pulse-soft {
+    50% {
+      opacity: 0.55;
+    }
+  }
+}

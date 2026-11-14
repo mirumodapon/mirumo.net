@@ -223,9 +223,6 @@ importers:
       '@mirumo/arcade-ui':
         specifier: workspace:*
         version: link:../../packages/arcade-ui
-      '@mirumo/themes':
-        specifier: workspace:*
-        version: link:../../packages/themes
       react:
         specifier: 'catalog:'
         version: 19.3.1
@@ -251,9 +248,6 @@ importers:
       storybook:
         specifier: 'catalog:'
         version: 10.6.7(@types/react@19.3.0)(react@19.3.1)
-      tailwindcss:
-        specifier: 'catalog:'
-        version: 4.3.5
       vite:
         specifier: 'catalog:'
         version: 8.3.8(esbuild@0.28.2)(jiti@2.7.0)
@@ -266,11 +260,8 @@ importers:
       react:
         specifier: 'catalog:'
         version: 19.3.1
-
-  packages/themes:
-    dependencies:
       tailwindcss:
-        specifier: ^4.3.0
+        specifier: 'catalog:'
         version: 4.3.5
 
 packages:
