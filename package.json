@@ -1,0 +1,11 @@
+{
+  "name": "mirumo-net",
+  "private": true,
+  "packageManager": "pnpm@12.5.1",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "test": "pnpm -r --if-present test"
+  }
+}
