@@ -162,18 +162,30 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+catalogs:
+  default:
+    oxfmt:
+      specifier: ^0.78.0
+      version: 0.78.0
+    oxlint:
+      specifier: ^1.93.0
+      version: 1.93.0
+    typescript:
+      specifier: ^7.0.2
+      version: 7.0.2
+
 importers:
 
   .:
     devDependencies:
       oxfmt:
-        specifier: ^0.78.0
+        specifier: 'catalog:'
         version: 0.78.0
       oxlint:
-        specifier: ^1.93.0
+        specifier: 'catalog:'
         version: 1.93.0
       typescript:
-        specifier: ^7.0.2
+        specifier: 'catalog:'
         version: 7.0.2
 
 packages:

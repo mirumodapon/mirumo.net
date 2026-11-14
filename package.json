@@ -9,9 +9,9 @@
     "test": "pnpm -r --if-present test"
   },
   "devDependencies": {
-    "oxfmt": "^0.78.0",
-    "oxlint": "^1.93.0",
-    "typescript": "^7.0.2"
+    "oxfmt": "catalog:",
+    "oxlint": "catalog:",
+    "typescript": "catalog:"
   },
   "engines": {
     "node": ">=24"
