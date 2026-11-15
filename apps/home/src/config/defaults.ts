@@ -1,6 +1,6 @@
 import type { AcPanelCorner } from '@mirumo/arcade-ui'
 
-export type HomeLayout = 'panel' | 'clock' | 'time-only'
+export type HomeLayout = 'time-only' | 'clock'
 
 export type HomeConfig = {
   title: string
@@ -18,7 +18,7 @@ export type HomeConfig = {
 export const defaultConfig: HomeConfig = {
   title: 'MIRUMO',
   player: { label: '1UP', text: 'HELLO' },
-  layout: 'panel',
+  layout: 'time-only',
   screen: { scanlines: true },
   clock: {
     title: 'TIME',

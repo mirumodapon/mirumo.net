@@ -2,7 +2,7 @@ import { clsx } from 'clsx'
 import { formatClock } from './format'
 import { useNow } from './useNow'
 
-export type ClockSize = 'panel' | 'card' | 'hero'
+export type ClockSize = 'panel' | 'hero'
 
 export type ClockProps = {
   seconds?: boolean
@@ -12,7 +12,6 @@ export type ClockProps = {
 
 const sizes: Record<ClockSize, string> = {
   panel: 'ac:text-[length:clamp(34px,7vw,64px)]',
-  card: 'ac:text-[length:clamp(34px,12vw,96px)]',
   hero: 'ac:text-[length:clamp(48px,14vw,160px)]',
 }
 

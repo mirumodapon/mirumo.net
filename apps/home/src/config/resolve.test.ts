@@ -27,11 +27,11 @@ describe('resolveConfig', () => {
 })
 
 describe('defaultConfig', () => {
-  it('starts with the panel layout, MIRUMO title and a 1UP greeting', () => {
+  it('starts with the time-only layout, MIRUMO title and a 1UP greeting', () => {
     expect(defaultConfig).toMatchObject({
       title: 'MIRUMO',
       player: { label: '1UP', text: 'HELLO' },
-      layout: 'panel',
+      layout: 'time-only',
     })
   })
 })

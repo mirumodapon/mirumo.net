@@ -8,7 +8,7 @@ const render = (overrides: Parameters<typeof resolveConfig>[0]) =>
 
 const datePattern = /\d{4}\.\d{2}\.\d{2}/
 
-describe('panel layout', () => {
+describe('time-only layout (default)', () => {
   it('shows the MIRUMO title, the 1UP greeting and the TIME panel with the date', () => {
     const html = render({})
     expect(html).toContain('MIRUMO')
@@ -54,21 +54,5 @@ describe('clock layout', () => {
     expect(html).not.toContain('1UP')
     expect(html).not.toContain('TIME')
     expect(html).not.toMatch(datePattern)
-  })
-})
-
-describe('time-only layout', () => {
-  it('shows only the time inside a card sized to fit it', () => {
-    const html = render({ layout: 'time-only' })
-    expect(html).toMatch(/\d{2}:\d{2}/)
-    expect(html).toContain('<section')
-    expect(html).toMatch(/<section[^>]*ac:w-fit/)
-    expect(html).not.toContain('MIRUMO')
-    expect(html).not.toContain('1UP')
-    expect(html).not.toContain('>TIME<')
-    expect(html).not.toMatch(datePattern)
-  })
-  it('keeps the card labelled for screen readers', () => {
-    expect(render({ layout: 'time-only' })).toMatch(/<section[^>]*aria-label="TIME"/)
   })
 })
