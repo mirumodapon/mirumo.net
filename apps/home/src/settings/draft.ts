@@ -37,7 +37,7 @@ const safeUrl = /^https?:\/\//i
 function cleanRows(rows: HomeLink[]): HomeLink[] {
   return rows
     .filter((row) => safeUrl.test(row.url))
-    .map(({ name, url, icon }) => ({ name: name || url, url, ...(icon ? { icon } : {}) }))
+    .map(({ name, url, icon }) => ({ name, url, ...(icon ? { icon } : {}) }))
 }
 
 export function normalizeSettings(settings: HomeSettings): HomeSettings {

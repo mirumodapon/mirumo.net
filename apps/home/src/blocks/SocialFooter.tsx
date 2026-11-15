@@ -16,7 +16,8 @@ export function SocialFooter({
         <AcChip
           key={`${social.name}-${social.url}`}
           href={social.url}
-          prefix={social.icon}
+          prefix={social.icon || (social.name ? undefined : 'link')}
+          aria-label={social.name ? undefined : social.url}
           target="_blank"
           rel="noopener noreferrer me"
         >

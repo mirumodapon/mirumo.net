@@ -13,7 +13,12 @@ export function LinksPanel({ title, items }: LinksPanelProps) {
             key={`${item.name}-${item.url}`}
             href={item.url}
             color={acLinkTileColors[i % acLinkTileColors.length]}
-            badge={item.icon ? <AcIcon name={item.icon} className="ac:text-[18px]" /> : undefined}
+            aria-label={item.name ? undefined : item.url}
+            badge={
+              item.icon || !item.name ? (
+                <AcIcon name={item.icon || 'link'} className="ac:text-[18px]" />
+              ) : undefined
+            }
           >
             {item.name}
           </AcLinkTile>

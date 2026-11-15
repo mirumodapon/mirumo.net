@@ -49,7 +49,7 @@ describe('normalizeSettings', () => {
   ]
   const expected = [
     { name: 'A', url: 'https://a.test/' },
-    { name: 'https://b.test/', url: 'https://b.test/' },
+    { name: '', url: 'https://b.test/' },
   ]
 
   it('cleans link rows in every group and keeps empty groups', () => {
