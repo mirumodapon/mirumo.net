@@ -1,6 +1,6 @@
 import type { AcPanelCorner } from '@mirumo/arcade-ui'
 
-export type HomeLayout = 'panel' | 'clock'
+export type HomeLayout = 'panel' | 'clock' | 'time-only'
 
 export type HomeConfig = {
   title: string

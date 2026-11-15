@@ -43,3 +43,19 @@ describe('clock layout', () => {
     expect(html).not.toMatch(datePattern)
   })
 })
+
+describe('time-only layout', () => {
+  it('shows only the time inside a card sized to fit it', () => {
+    const html = render({ layout: 'time-only' })
+    expect(html).toMatch(/\d{2}:\d{2}/)
+    expect(html).toContain('<section')
+    expect(html).toMatch(/<section[^>]*ac:w-fit/)
+    expect(html).not.toContain('MIRUMO')
+    expect(html).not.toContain('1UP')
+    expect(html).not.toContain('>TIME<')
+    expect(html).not.toMatch(datePattern)
+  })
+  it('keeps the card labelled for screen readers', () => {
+    expect(render({ layout: 'time-only' })).toMatch(/<section[^>]*aria-label="TIME"/)
+  })
+})

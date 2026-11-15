@@ -3,10 +3,12 @@ import type { ComponentType } from 'react'
 import type { HomeConfig, HomeLayout } from './config'
 import { ClockLayout } from './layouts/ClockLayout'
 import { PanelLayout } from './layouts/PanelLayout'
+import { TimeOnlyLayout } from './layouts/TimeOnlyLayout'
 
 const layouts: Record<HomeLayout, ComponentType<{ config: HomeConfig }>> = {
   panel: PanelLayout,
   clock: ClockLayout,
+  'time-only': TimeOnlyLayout,
 }
 
 export function App({ config }: { config: HomeConfig }) {
