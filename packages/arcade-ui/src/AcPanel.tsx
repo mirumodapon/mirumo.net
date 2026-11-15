@@ -1,5 +1,6 @@
 import { clsx } from 'clsx'
 import { useId, type ComponentProps, type ReactNode } from 'react'
+import { mazeFrame, mazeHeading } from './maze'
 
 export const acPanelCorners = ['tl', 'tr', 'bl', 'br'] as const
 export type AcPanelCorner = (typeof acPanelCorners)[number]
@@ -9,15 +10,7 @@ export type AcPanelProps = Omit<ComponentProps<'section'>, 'title'> & {
   pellets?: AcPanelCorner[]
 }
 
-const panel = clsx(
-  'ac:relative ac:rounded-maze ac:border-3 ac:border-wall ac:bg-surface/85 ac:shadow-maze',
-  'ac:px-6 ac:pt-6.5 ac:pb-5.5 ac:text-ink',
-)
-
-const heading = clsx(
-  'ac:m-0 ac:mb-4.5 ac:flex ac:flex-wrap ac:items-baseline ac:gap-3',
-  'ac:font-pixel ac:text-[12px] ac:font-normal ac:text-info',
-)
+const panel = clsx(mazeFrame, 'ac:relative ac:bg-surface/85')
 
 const pellet = clsx(
   'ac:absolute ac:size-3 ac:rounded-full ac:bg-pellet ac:shadow-pellet',
@@ -44,7 +37,7 @@ export function AcPanel({ title, pellets = [], className, children, ...props }: 
         <span key={corner} className={clsx(pellet, corners[corner])} aria-hidden />
       ))}
       {title != null && (
-        <h2 id={titleId} className={heading}>
+        <h2 id={titleId} className={mazeHeading}>
           {title}
         </h2>
       )}
