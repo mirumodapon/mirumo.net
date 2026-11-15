@@ -68,6 +68,7 @@ describe('defaults', () => {
   it('starts each workspace with the default layout and the prototype content', () => {
     expect(defaultWorkspace).toMatchObject({
       layout: 'default',
+      clockLayout: { marquee: false },
       weather: { title: 'WEATHER', place: 'TAIPEI' },
     })
     expect(defaultWorkspace.linkGroups).toHaveLength(1)

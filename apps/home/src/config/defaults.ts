@@ -25,6 +25,7 @@ export type WorkspaceConfig = {
     date: boolean
   }
   weather: { title: string; place: string }
+  clockLayout: { marquee: boolean }
   linkGroups: HomeLinkGroup[]
   socials: HomeSocial[]
 }
@@ -48,6 +49,7 @@ export const defaultWorkspace: WorkspaceConfig = {
     date: true,
   },
   weather: { title: 'WEATHER', place: 'TAIPEI' },
+  clockLayout: { marquee: false },
   linkGroups: [
     {
       title: 'LINKS',

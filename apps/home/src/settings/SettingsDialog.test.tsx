@@ -59,7 +59,7 @@ describe('SettingsDialog', () => {
       'value="MIRUMO"',
       'value="1UP"',
       'placeholder="留空依時間顯示"',
-      '顯示標題列',
+      '顯示標題列（default／time-only）',
       'value="STAGE"',
       '＋ 新增 workspace',
       '重設為設定檔',
@@ -113,5 +113,32 @@ describe('SettingsButton', () => {
     const html = renderToStaticMarkup(<SettingsButton onOpen={noop} />)
     expect(html).toContain('aria-label="SETTINGS"')
     expect(html).toContain('ti-settings')
+  })
+})
+
+describe('workspace settings follow the layout', () => {
+  const count = (html: string, text: string) => html.split(text).length - 1
+  const forLayout = (layout: 'default' | 'time-only' | 'clock') =>
+    renderDialog({ workspaces: [{ layout }] })
+
+  it('shows everything for the default layout', () => {
+    const html = forLayout('default')
+    for (const text of ['顯示秒數', '顯示日期', '地點', '＋ 新增群組', '＋ 新增社群']) {
+      expect(html).toContain(text)
+    }
+    expect(count(html, '>顯示標題列<')).toBe(0)
+  })
+  it('shows only the clock options for time-only', () => {
+    const html = forLayout('time-only')
+    expect(html).toContain('顯示秒數')
+    expect(html).toContain('顯示日期')
+    for (const text of ['地點', '＋ 新增群組', '＋ 新增社群']) expect(html).not.toContain(text)
+  })
+  it('shows seconds and its own title bar toggle for clock', () => {
+    const html = forLayout('clock')
+    expect(html).toContain('顯示秒數')
+    expect(html).toContain('>顯示標題列<')
+    for (const text of ['顯示日期', '地點', '＋ 新增群組', '＋ 新增社群'])
+      expect(html).not.toContain(text)
   })
 })

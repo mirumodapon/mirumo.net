@@ -229,3 +229,18 @@ describe('title bar visibility', () => {
     expect(html).toContain(reveal)
   })
 })
+
+describe('clock layout title bar', () => {
+  it('shows the title bar on the page when the clock layout turns it on', () => {
+    const html = render({ layout: 'clock', clockLayout: { marquee: true } })
+    expect(html).toContain('<header')
+    expect(html).not.toContain('data-marquee-reveal')
+  })
+  it('follows its own setting, not the global one', () => {
+    const html = render(
+      { layout: 'clock', clockLayout: { marquee: true } },
+      { marquee: { visible: false } },
+    )
+    expect(html).toContain('<header')
+  })
+})

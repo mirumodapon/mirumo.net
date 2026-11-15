@@ -52,7 +52,7 @@ export function GlobalTab({ settings, onChange, onReset }: GlobalTabProps) {
           checked={global.marquee.visible}
           onChange={(event) => set({ marquee: { visible: event.target.checked } })}
         >
-          顯示標題列
+          顯示標題列（default／time-only）
         </AcCheckbox>
       </AcFieldset>
 
