@@ -14,9 +14,3 @@ export function describeWeather(code: number): { icon: string; text: string } {
   const hit = table.find(([codes]) => codes.includes(code))
   return hit ? { icon: hit[1], text: hit[2] } : { icon: 'cloud-question', text: 'UNKNOWN' }
 }
-
-export function dayLabel(isoDate: string, index: number): string {
-  if (index === 0) return 'TODAY'
-  const [, month, day] = isoDate.split('-')
-  return `${month}/${day}`
-}

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { dayLabel, describeWeather } from './codes'
+import { describeWeather } from './codes'
 import { createMockWeather } from './mock'
 
 describe('describeWeather', () => {
@@ -10,16 +10,10 @@ describe('describeWeather', () => {
     expect(describeWeather(42)).toEqual({ icon: 'cloud-question', text: 'UNKNOWN' }))
 })
 
-describe('dayLabel', () => {
-  it('labels the first day TODAY', () => expect(dayLabel('2026-11-15', 0)).toBe('TODAY'))
-  it('labels later days MM/DD', () => expect(dayLabel('2026-11-16', 1)).toBe('11/16'))
-})
-
 describe('createMockWeather', () => {
   it('starts three days at the given date, crossing month boundaries', () => {
     const data = createMockWeather(new Date(2026, 10, 30))
     expect(data.daily.time).toEqual(['2026-11-30', '2026-12-01', '2026-12-02'])
-    expect(dayLabel(data.daily.time[1]!, 1)).toBe('12/01')
   })
   it('has fixed current conditions', () =>
     expect(createMockWeather(new Date(2026, 10, 15)).current.temperature_2m).toBe(24))

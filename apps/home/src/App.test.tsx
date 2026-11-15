@@ -82,7 +82,9 @@ describe('default layout', () => {
       'FEELS 25°',
       'HUM 70%',
       'WIND 12km/h',
-      'TODAY',
+      'HI 26°',
+      'LO 19°',
+      'RAIN 10%',
       'LINKS',
       'Gmail',
       'href="https://mail.google.com/"',
@@ -94,6 +96,11 @@ describe('default layout', () => {
     }
     expect(html).toMatch(/\d{2}:\d{2}/)
     expect(html).toMatch(datePattern)
+  })
+  it("shows only today's weather, without the next days", () => {
+    const html = render({})
+    expect(html).not.toContain('TODAY')
+    expect(html).not.toMatch(/>\d{2}\/\d{2}</)
   })
   it('hides the links panel when there are no links', () => {
     expect(render({ links: { items: [] } })).not.toContain('LINKS')
