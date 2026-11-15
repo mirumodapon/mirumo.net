@@ -23,6 +23,16 @@ describe('panel layout', () => {
   it('centers the time and date inside the full-width card', () => {
     expect(render({})).toMatch(/<div class="ac:text-center"><time/)
   })
+  it('centers the card vertically in the space below the marquee', () => {
+    const html = render({})
+    expect(html).toMatch(/ac:min-h-\[calc\(100dvh_-_3\.5rem\)\][^"]*ac:grid-rows-\[auto_1fr\]/)
+    expect(html).toMatch(/<section[^>]*ac:self-center/)
+  })
+  it('spaces the card evenly above and below so the centering is symmetric', () => {
+    const html = render({})
+    expect(html).not.toMatch(/ac:grid-rows-\[auto_1fr\][^"]*ac:gap-/)
+    expect(html).toMatch(/<section[^>]*ac:my-6/)
+  })
   it('uses the configured greeting and title text', () => {
     const html = render({ title: 'ARCADE', player: { text: 'READY' } })
     expect(html).toContain('ARCADE')
