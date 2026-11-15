@@ -64,7 +64,7 @@ describe('defaults', () => {
       marquee: { visible: true },
     })
   })
-  it('starts each workspace with the default layout, no links and the owner socials', () => {
+  it('starts each workspace with the default layout, the owner links and socials', () => {
     expect(defaultWorkspace).toMatchObject({
       layout: 'default',
       clockLayout: { marquee: false },
@@ -76,7 +76,16 @@ describe('defaults', () => {
         longitude: 121.5654,
       },
     })
-    expect(defaultWorkspace.linkGroups).toEqual([{ title: 'LINKS', items: [] }])
+    expect(defaultWorkspace.linkGroups).toEqual([
+      {
+        title: 'LINKS',
+        items: [
+          { name: 'Blog', url: 'https://blog.mirumo.net', icon: 'brand-blogger' },
+          { name: 'Social', url: 'https://social.mirumo.net', icon: 'message-circle' },
+          { name: 'Travel Billing', url: 'https://billing.mirumo.net', icon: 'moneybag-edit' },
+        ],
+      },
+    ])
     expect(defaultWorkspace.socials).toEqual([
       { name: 'GitHub', url: 'https://github.com/mirumodapon', icon: 'brand-github' },
       { name: 'Instagram', url: 'https://www.instagram.com/mirumo_0915', icon: 'brand-instagram' },
