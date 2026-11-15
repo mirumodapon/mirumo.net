@@ -1,9 +1,14 @@
-import { AcScreen } from '@mirumo/arcade-ui'
+import { AcPanel, AcScreen } from '@mirumo/arcade-ui'
+import { Clock } from './clock/Clock'
 
 export function App() {
   return (
     <AcScreen>
-      <p className="ac:tracking-[0.5em]">MIRUMO.NET</p>
+      <div className="ac:mx-auto ac:max-w-xl">
+        <AcPanel title="TIME" pellets={['tl', 'br']}>
+          <Clock />
+        </AcPanel>
+      </div>
     </AcScreen>
   )
 }
