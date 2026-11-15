@@ -1,32 +1,6 @@
-import { Meta } from '@storybook/addon-docs/blocks'
+import { Markdown, Meta } from '@storybook/addon-docs/blocks'
+import readme from '../../../../README.md?raw'
 
 <Meta title="Introduction" />
 
-# mirumo.net Storybook
-
-mirumo.net 的元件展示與文件。
-
-## 啟動
-
-在 `web/` 目錄下執行：
-
-```sh
-# 開發模式，啟動後打開 http://localhost:6006
-pnpm --filter @mirumo/storybook dev
-
-# 建置靜態網站，輸出到 apps/storybook/storybook-static/
-pnpm --filter @mirumo/storybook build
-```
-
-## 新增內容
-
-所有檔案都放在 `apps/storybook/src/` 底下，Storybook 會自動找到：
-
-- **文件頁**：`*.mdx`，說明、指南等純文件頁面，放在 `docs/`
-- **Story**：`*.stories.ts(x)`，展示元件的各種狀態
-
-`@mirumo/arcade-ui` 相關的 story 都放在 `arcade/`；樣式由 `.storybook/preview.ts` 直接引用 `@mirumo/arcade-ui/index.css`。
-
-## 依賴版本
-
-套件版本統一定義在 `web/pnpm-workspace.yaml` 的 `catalog`，`package.json` 裡只寫 `catalog:`。
+<Markdown>{readme}</Markdown>
