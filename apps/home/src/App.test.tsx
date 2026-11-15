@@ -34,7 +34,7 @@ describe('time-only layout', () => {
     const html = renderTimeOnly({})
     expect(html).toContain('MIRUMO')
     expect(html).toContain('1UP')
-    expect(html).toContain('HELLO')
+    expect(html).toMatch(/GOOD MORNING|GOOD AFTERNOON|GOOD EVENING|LATE NIGHT/)
     expect(html).toContain('TIME')
     expect(html).toMatch(datePattern)
   })
@@ -66,7 +66,7 @@ describe('time-only layout', () => {
     const html = renderTimeOnly({}, { title: 'ARCADE', player: { text: 'READY' } })
     expect(html).toContain('ARCADE')
     expect(html).toContain('READY')
-    expect(html).not.toContain('HELLO')
+    expect(html).not.toMatch(/GOOD MORNING|GOOD AFTERNOON|GOOD EVENING|LATE NIGHT/)
   })
   it('hides the date and seconds when turned off', () => {
     const html = renderTimeOnly({ clock: { date: false, seconds: false } })

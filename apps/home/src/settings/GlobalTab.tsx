@@ -29,6 +29,7 @@ export function GlobalTab({ settings, onChange, onReset }: GlobalTabProps) {
         <AcField label="1UP 文字">
           <AcInput
             value={global.player.text}
+            placeholder="留空依時間顯示"
             onChange={(event) => set({ player: { ...global.player, text: event.target.value } })}
           />
         </AcField>

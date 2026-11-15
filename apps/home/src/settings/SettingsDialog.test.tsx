@@ -58,7 +58,7 @@ describe('SettingsDialog', () => {
     for (const text of [
       'value="MIRUMO"',
       'value="1UP"',
-      'value="HELLO"',
+      'placeholder="留空依時間顯示"',
       'value="STAGE"',
       '＋ 新增 workspace',
       '重設為設定檔',

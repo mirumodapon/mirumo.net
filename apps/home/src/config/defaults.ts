@@ -32,7 +32,7 @@ export type HomeSettings = { global: GlobalConfig; workspaces: WorkspaceConfig[]
 
 export const defaultGlobal: GlobalConfig = {
   title: 'MIRUMO',
-  player: { label: '1UP', text: 'HELLO' },
+  player: { label: '1UP', text: '' },
   stage: { label: 'STAGE' },
   screen: { scanlines: true },
 }

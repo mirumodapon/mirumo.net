@@ -59,7 +59,7 @@ describe('defaults', () => {
   it('has the MIRUMO globals', () => {
     expect(defaultGlobal).toEqual({
       title: 'MIRUMO',
-      player: { label: '1UP', text: 'HELLO' },
+      player: { label: '1UP', text: '' },
       stage: { label: 'STAGE' },
       screen: { scanlines: true },
     })

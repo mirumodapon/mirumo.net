@@ -4,6 +4,7 @@ import { LinksPanel } from '../blocks/LinksPanel'
 import { SocialFooter } from '../blocks/SocialFooter'
 import { WeatherPanel } from '../blocks/WeatherPanel'
 import { Clock } from '../clock/Clock'
+import { PlayerText } from '../clock/PlayerText'
 import { createMockWeather } from '../weather/mock'
 import type { LayoutProps } from './LayoutProps'
 import { stageScore } from './stageScore'
@@ -17,7 +18,7 @@ export function DefaultLayout(props: LayoutProps) {
     <div className="ac:flex ac:min-h-[calc(100dvh_-_3.5rem)] ac:flex-col ac:gap-5">
       <AcMarquee
         title={title}
-        start={{ label: player.label, value: player.text }}
+        start={{ label: player.label, value: <PlayerText text={player.text} /> }}
         end={stageScore(props)}
       />
       <div className="ac:grid ac:gap-5 ac:md:grid-cols-[1.1fr_1fr]">
