@@ -17,11 +17,13 @@ export type AcDialogProps = Omit<ComponentProps<'dialog'>, 'open' | 'title'> & {
 
 const dialog = clsx(
   mazeFrame,
-  'ac:m-auto ac:w-[min(720px,calc(100vw_-_32px))] ac:max-h-[calc(100vh_-_48px)] ac:overflow-auto',
+  'ac:m-auto ac:w-[min(720px,calc(100vw_-_32px))] ac:max-h-[calc(100vh_-_48px)] ac:open:flex ac:open:flex-col',
   'ac:bg-surface ac:backdrop:bg-black/75',
 )
 
-const footer = 'ac:mt-6 ac:flex ac:flex-wrap ac:justify-end ac:gap-2.5'
+const body = 'ac:flex ac:min-h-0 ac:flex-1 ac:flex-col ac:overflow-auto'
+
+const footer = 'ac:mt-6 ac:flex ac:shrink-0 ac:flex-wrap ac:justify-end ac:gap-2.5'
 
 export function AcDialog({
   open,
@@ -53,11 +55,11 @@ export function AcDialog({
       {...props}
     >
       {title != null && (
-        <h2 id={titleId} className={mazeHeading}>
+        <h2 id={titleId} className={clsx(mazeHeading, 'ac:shrink-0')}>
           {title}
         </h2>
       )}
-      {children}
+      <div className={body}>{children}</div>
       {actions != null && <div className={footer}>{actions}</div>}
     </dialog>
   )

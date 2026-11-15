@@ -50,6 +50,7 @@ export function SettingsDialog({
     >
       <AcTabs
         aria-label="SETTINGS"
+        className="ac:flex-1"
         tabs={[
           {
             id: 'workspace',

@@ -47,11 +47,11 @@ export function AcTabs({
   }
 
   return (
-    <div className={className}>
+    <div className={clsx('ac:flex ac:min-h-0 ac:flex-col', className)}>
       <div
         role="tablist"
         aria-label={ariaLabel}
-        className="ac:flex ac:gap-2 ac:border-b-2 ac:border-wall"
+        className="ac:flex ac:shrink-0 ac:gap-2 ac:border-b-2 ac:border-wall"
       >
         {tabs.map((tab, index) => {
           const active = tab.id === selected
@@ -88,7 +88,7 @@ export function AcTabs({
           id={`${baseId}-panel-${tab.id}`}
           aria-labelledby={`${baseId}-tab-${tab.id}`}
           hidden={tab.id !== selected}
-          className="ac:pt-4"
+          className="ac:min-h-0 ac:flex-1 ac:overflow-auto ac:pt-4"
         >
           {tab.content}
         </div>

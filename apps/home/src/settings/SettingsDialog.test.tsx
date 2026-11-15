@@ -77,6 +77,21 @@ describe('SettingsDialog', () => {
   })
 })
 
+describe('SettingsDialog scrolling', () => {
+  it('keeps the title, tab bar and actions out of the scrolling area', () => {
+    const html = renderDialog()
+    const dialogTag = html.match(/<dialog[^>]*>/)![0]
+    expect(dialogTag).not.toContain('ac:overflow-auto')
+    expect(dialogTag).toContain('ac:open:flex')
+    expect(html).toMatch(/<div role="tablist"[^>]*ac:shrink-0/)
+    expect(html).toMatch(/<div role="tabpanel"[^>]*ac:overflow-auto/)
+    const footerIndex = html.lastIndexOf('儲存')
+    const lastPanelEnd = html.lastIndexOf('role="tabpanel"')
+    expect(footerIndex).toBeGreaterThan(lastPanelEnd)
+    expect(html).toMatch(/<div class="[^"]*ac:shrink-0[^"]*"><button[^>]*>取消/)
+  })
+})
+
 describe('SettingsButton', () => {
   it('is an icon-only gear labelled SETTINGS', () => {
     const html = renderToStaticMarkup(<SettingsButton onOpen={noop} />)
