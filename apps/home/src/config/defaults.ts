@@ -67,7 +67,11 @@ export const defaultWorkspace: WorkspaceConfig = {
   linkGroups: [
     {
       title: 'LINKS',
-      items: [],
+      items: [
+        { name: 'Blog', url: 'https://blog.mirumo.net', icon: 'brand-blogger' },
+        { name: 'Social', url: 'https://social.mirumo.net', icon: 'message-circle' },
+        { name: 'Travel Billing', url: 'https://billing.mirumo.net', icon: 'moneybag-edit' },
+      ],
     },
   ],
   socials: [
