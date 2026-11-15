@@ -6,7 +6,7 @@ describe('formatClock', () => {
     expect(formatClock(new Date(2026, 10, 15, 9, 5, 3))).toEqual({
       time: '09:05',
       seconds: '03',
-      date: '2026.11.15  星期日',
+      date: '2026.11.15  SUN',
     })
   })
   it('uses 24-hour time', () => {
@@ -15,13 +15,13 @@ describe('formatClock', () => {
   it('rolls the date at midnight', () => {
     const next = formatClock(new Date(2026, 10, 16, 0, 0, 0))
     expect(next.time).toBe('00:00')
-    expect(next.date).toBe('2026.11.16  星期一')
+    expect(next.date).toBe('2026.11.16  MON')
   })
-  it('names every weekday', () => {
+  it('names every weekday with a three-letter English abbreviation', () => {
     const names = [15, 16, 17, 18, 19, 20, 21].map((d) =>
-      formatClock(new Date(2026, 10, d)).date.slice(-1),
+      formatClock(new Date(2026, 10, d)).date.slice(-3),
     )
-    expect(names).toEqual(['日', '一', '二', '三', '四', '五', '六'])
+    expect(names).toEqual(['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'])
   })
 })
 
