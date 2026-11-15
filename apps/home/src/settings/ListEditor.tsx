@@ -11,16 +11,16 @@ export type ListEditorProps = {
 
 const row = clsx(
   'ac:grid ac:grid-cols-[minmax(0,1fr)_minmax(0,2fr)_minmax(0,1fr)_auto_auto_auto] ac:items-center ac:gap-1.5',
-  'ac:max-[480px]:grid-cols-[minmax(0,1fr)_auto_auto_auto]',
+  'ac:max-[480px]:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto_auto_auto]',
 )
 
 const narrow = {
-  name: 'ac:max-[480px]:col-span-2 ac:max-[480px]:row-start-1',
-  icon: 'ac:max-[480px]:col-span-2 ac:max-[480px]:col-start-3 ac:max-[480px]:row-start-1',
-  url: 'ac:max-[480px]:col-start-1 ac:max-[480px]:row-start-2',
-  up: 'ac:max-[480px]:col-start-2 ac:max-[480px]:row-start-2',
-  down: 'ac:max-[480px]:col-start-3 ac:max-[480px]:row-start-2',
-  remove: 'ac:max-[480px]:col-start-4 ac:max-[480px]:row-start-2',
+  name: 'ac:max-[480px]:col-start-1 ac:max-[480px]:row-start-1',
+  icon: 'ac:max-[480px]:col-span-4 ac:max-[480px]:col-start-2 ac:max-[480px]:row-start-1',
+  url: 'ac:max-[480px]:col-span-2 ac:max-[480px]:col-start-1 ac:max-[480px]:row-start-2',
+  up: 'ac:max-[480px]:col-start-3 ac:max-[480px]:row-start-2',
+  down: 'ac:max-[480px]:col-start-4 ac:max-[480px]:row-start-2',
+  remove: 'ac:max-[480px]:col-start-5 ac:max-[480px]:row-start-2',
 }
 
 export function ListEditor({ kind, items, onChange }: ListEditorProps) {
