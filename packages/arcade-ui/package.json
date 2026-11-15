@@ -8,7 +8,8 @@
     "./index.css": "./src/index.css"
   },
   "scripts": {
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "test": "vitest run"
   },
   "dependencies": {
     "@fontsource/noto-sans-tc": "catalog:",
@@ -19,7 +20,8 @@
   "devDependencies": {
     "@types/react": "catalog:",
     "react": "catalog:",
-    "tailwindcss": "catalog:"
+    "tailwindcss": "catalog:",
+    "vitest": "catalog:"
   },
   "peerDependencies": {
     "react": "^19.0.0",
