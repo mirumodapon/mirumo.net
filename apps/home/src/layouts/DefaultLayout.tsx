@@ -3,6 +3,8 @@ import { LinksPanel } from '../blocks/LinksPanel'
 import { SocialFooter } from '../blocks/SocialFooter'
 import { WeatherPanel } from '../blocks/WeatherPanel'
 import { Clock } from '../clock/Clock'
+import { placeLabel } from '../weather/placeLabel'
+import { usePlaceName } from '../weather/usePlaceName'
 import { usePosition } from '../weather/usePosition'
 import { useWeather } from '../weather/useWeather'
 import type { LayoutProps } from './LayoutProps'
@@ -17,6 +19,7 @@ export function DefaultLayout(props: LayoutProps) {
       ? { latitude: weather.latitude, longitude: weather.longitude }
       : position.coords
   const weatherState = useWeather(coords)
+  const placeName = usePlaceName(weather.source === 'current' ? coords : undefined)
   return (
     <div className="ac:flex ac:min-h-[calc(100dvh_-_3.5rem)] ac:flex-col ac:gap-5">
       {global.marquee.visible && <PageMarquee {...props} />}
@@ -26,7 +29,7 @@ export function DefaultLayout(props: LayoutProps) {
         </AcPanel>
         <WeatherPanel
           title={weather.title}
-          place={weather.place}
+          place={placeLabel(weather, placeName)}
           state={position.pending ? { status: 'loading' } : weatherState}
         />
       </div>

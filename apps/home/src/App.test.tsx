@@ -94,7 +94,6 @@ describe('default layout', () => {
       'STAGE',
       'TIME',
       'WEATHER',
-      'TAIPEI',
       'LOADING',
       'LINKS',
       'Gmail',
@@ -107,6 +106,7 @@ describe('default layout', () => {
     }
     expect(html).toMatch(/\d{2}:\d{2}/)
     expect(html).toMatch(datePattern)
+    expect(html).not.toContain('TAIPEI')
   })
   it("shows only today's weather, without the next days", () => {
     const html = render({})
@@ -163,8 +163,8 @@ describe('default layout', () => {
   it('hides the footer when there are no socials', () => {
     expect(render({ socials: [] })).not.toContain('<footer')
   })
-  it('shows the configured weather place', () => {
-    expect(render({ weather: { place: 'TOKYO' } })).toContain('TOKYO')
+  it('shows the configured place for a fixed weather location', () => {
+    expect(render({ weather: { source: 'fixed', place: 'TOKYO' } })).toContain('TOKYO')
   })
 })
 

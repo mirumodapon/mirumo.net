@@ -72,7 +72,7 @@ describe('defaults', () => {
       weather: {
         title: 'WEATHER',
         place: 'TAIPEI',
-        source: 'fixed',
+        source: 'current',
         latitude: 25.033,
         longitude: 121.5654,
       },

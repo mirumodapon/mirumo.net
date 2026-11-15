@@ -1,4 +1,4 @@
-import { AcButton, AcField, AcInput, AcSelect } from '@mirumo/arcade-ui'
+import { AcButton, AcInput, AcSelect } from '@mirumo/arcade-ui'
 import { useState } from 'react'
 import type { WeatherSource, WorkspaceConfig } from '../config'
 import { searchPlaces, type Place } from '../weather/api'
@@ -44,8 +44,7 @@ export function WeatherSettings({ weather, onChange }: WeatherSettingsProps) {
     setQuery('')
   }
 
-  const setSource = (source: WeatherSource) =>
-    onChange({ ...weather, source, ...(source === 'current' ? { place: 'HERE' } : {}) })
+  const setSource = (source: WeatherSource) => onChange({ ...weather, source })
 
   return (
     <div className="ac:grid ac:gap-3">
@@ -96,13 +95,7 @@ export function WeatherSettings({ weather, onChange }: WeatherSettingsProps) {
           </p>
         </>
       ) : (
-        <AcField label="地點名稱">
-          <AcInput
-            aria-label="地點名稱"
-            value={weather.place}
-            onChange={(event) => onChange({ ...weather, place: event.target.value })}
-          />
-        </AcField>
+        <p className="ac:m-0 ac:text-muted">地點名稱會依目前位置自動顯示</p>
       )}
     </div>
   )
