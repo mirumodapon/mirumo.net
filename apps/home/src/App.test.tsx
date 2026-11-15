@@ -20,6 +20,9 @@ describe('panel layout', () => {
   it('spans the full screen width', () => {
     expect(render({})).not.toMatch(/ac:max-w-/)
   })
+  it('centers the time and date inside the full-width card', () => {
+    expect(render({})).toMatch(/<div class="ac:text-center"><time/)
+  })
   it('uses the configured greeting and title text', () => {
     const html = render({ title: 'ARCADE', player: { text: 'READY' } })
     expect(html).toContain('ARCADE')
