@@ -12,7 +12,7 @@ export function DefaultLayout({ config, stage }: { config: HomeConfig; stage: nu
   const { title, player, clock, weather, links, socials } = config
   const [weatherData] = useState(() => createMockWeather(new Date()))
   return (
-    <div className="ac:grid ac:gap-5">
+    <div className="ac:flex ac:min-h-[calc(100dvh_-_3.5rem)] ac:flex-col ac:gap-5">
       <AcMarquee
         title={title}
         start={{ label: player.label, value: player.text }}
@@ -25,7 +25,7 @@ export function DefaultLayout({ config, stage }: { config: HomeConfig; stage: nu
         <WeatherPanel title={weather.title} place={weather.place} data={weatherData} />
       </div>
       <LinksPanel title={links.title} items={links.items} />
-      <SocialFooter socials={socials} />
+      <SocialFooter socials={socials} className="ac:mt-auto" />
     </div>
   )
 }

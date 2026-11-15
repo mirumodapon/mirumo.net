@@ -1,10 +1,17 @@
 import { AcChip } from '@mirumo/arcade-ui'
+import { clsx } from 'clsx'
 import type { HomeSocial } from '../config'
 
-export function SocialFooter({ socials }: { socials: HomeSocial[] }) {
+export function SocialFooter({
+  socials,
+  className,
+}: {
+  socials: HomeSocial[]
+  className?: string
+}) {
   if (socials.length === 0) return null
   return (
-    <footer className="ac:flex ac:flex-wrap ac:gap-2.5">
+    <footer className={clsx('ac:flex ac:flex-wrap ac:gap-2.5', className)}>
       {socials.map((social) => (
         <AcChip
           key={`${social.name}-${social.url}`}

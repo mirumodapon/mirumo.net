@@ -102,6 +102,11 @@ describe('default layout', () => {
     expect(html).not.toContain('TODAY')
     expect(html).not.toMatch(/>\d{2}\/\d{2}</)
   })
+  it('pushes the social footer to the bottom of the screen', () => {
+    const html = render({})
+    expect(html).toMatch(/ac:min-h-\[calc\(100dvh_-_3\.5rem\)\][^"]*ac:flex-col/)
+    expect(html).toMatch(/<footer[^>]*ac:mt-auto/)
+  })
   it('hides the links panel when there are no links', () => {
     expect(render({ links: { items: [] } })).not.toContain('LINKS')
   })
