@@ -1,21 +1,22 @@
 import { AcScreen } from '@mirumo/arcade-ui'
 import type { ComponentType } from 'react'
-import type { HomeConfig, HomeLayout } from './config'
+import type { HomeLayout } from './config'
 import { ClockLayout } from './layouts/ClockLayout'
 import { DefaultLayout } from './layouts/DefaultLayout'
+import type { LayoutProps } from './layouts/LayoutProps'
 import { TimeOnlyLayout } from './layouts/TimeOnlyLayout'
 
-const layouts: Record<HomeLayout, ComponentType<{ config: HomeConfig; stage: number }>> = {
+const layouts: Record<HomeLayout, ComponentType<LayoutProps>> = {
   default: DefaultLayout,
   clock: ClockLayout,
   'time-only': TimeOnlyLayout,
 }
 
-export function App({ config, stage }: { config: HomeConfig; stage: number }) {
-  const Layout = layouts[config.layout]
+export function App({ global, workspace, stage }: LayoutProps) {
+  const Layout = layouts[workspace.layout]
   return (
-    <AcScreen scanlines={config.screen.scanlines}>
-      <Layout config={config} stage={stage} />
+    <AcScreen scanlines={global.screen.scanlines}>
+      <Layout global={global} workspace={workspace} stage={stage} />
     </AcScreen>
   )
 }

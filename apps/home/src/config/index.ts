@@ -1,9 +1,17 @@
 import file from '../../home.config'
-import { resolveWorkspaces } from './resolve'
+import { resolveSettings } from './resolve'
 
-export type { HomeConfig, HomeLayout, HomeLink, HomeSocial } from './defaults'
-export { defaultConfig } from './defaults'
-export type { DeepPartial, HomeConfigFile, HomeConfigOverrides } from './resolve'
-export { resolveConfig, resolveWorkspaces } from './resolve'
+export type {
+  GlobalConfig,
+  HomeLayout,
+  HomeLink,
+  HomeLinkGroup,
+  HomeSettings,
+  HomeSocial,
+  WorkspaceConfig,
+} from './defaults'
+export { defaultGlobal, defaultWorkspace } from './defaults'
+export type { DeepPartial, HomeConfigFile } from './resolve'
+export { resolveSettings } from './resolve'
 
-export const workspaces = resolveWorkspaces(file)
+export const fileSettings = resolveSettings(file)

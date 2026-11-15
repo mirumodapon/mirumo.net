@@ -4,14 +4,19 @@ export type HomeLayout = 'default' | 'time-only' | 'clock'
 
 export type HomeLink = { name: string; url: string; icon?: string }
 
+export type HomeLinkGroup = { title: string; items: HomeLink[] }
+
 export type HomeSocial = { name: string; url: string; icon?: string }
 
-export type HomeConfig = {
+export type GlobalConfig = {
   title: string
   player: { label: string; text: string }
   stage: { label: string }
-  layout: HomeLayout
   screen: { scanlines: boolean }
+}
+
+export type WorkspaceConfig = {
+  layout: HomeLayout
   clock: {
     title: string
     pellets: AcPanelCorner[]
@@ -19,16 +24,21 @@ export type HomeConfig = {
     date: boolean
   }
   weather: { title: string; place: string }
-  links: { title: string; items: HomeLink[] }
+  linkGroups: HomeLinkGroup[]
   socials: HomeSocial[]
 }
 
-export const defaultConfig: HomeConfig = {
+export type HomeSettings = { global: GlobalConfig; workspaces: WorkspaceConfig[] }
+
+export const defaultGlobal: GlobalConfig = {
   title: 'MIRUMO',
   player: { label: '1UP', text: 'HELLO' },
   stage: { label: 'STAGE' },
-  layout: 'default',
   screen: { scanlines: true },
+}
+
+export const defaultWorkspace: WorkspaceConfig = {
+  layout: 'default',
   clock: {
     title: 'TIME',
     pellets: ['tl', 'br'],
@@ -36,17 +46,19 @@ export const defaultConfig: HomeConfig = {
     date: true,
   },
   weather: { title: 'WEATHER', place: 'TAIPEI' },
-  links: {
-    title: 'LINKS',
-    items: [
-      { name: 'Gmail', url: 'https://mail.google.com/', icon: 'brand-gmail' },
-      { name: 'Calendar', url: 'https://calendar.google.com/', icon: 'calendar' },
-      { name: 'GitHub', url: 'https://github.com/', icon: 'brand-github' },
-      { name: 'Drive', url: 'https://drive.google.com/', icon: 'brand-google-drive' },
-      { name: 'Notion', url: 'https://www.notion.so/', icon: 'brand-notion' },
-      { name: 'Claude', url: 'https://claude.ai/', icon: 'sparkles' },
-    ],
-  },
+  linkGroups: [
+    {
+      title: 'LINKS',
+      items: [
+        { name: 'Gmail', url: 'https://mail.google.com/', icon: 'brand-gmail' },
+        { name: 'Calendar', url: 'https://calendar.google.com/', icon: 'calendar' },
+        { name: 'GitHub', url: 'https://github.com/', icon: 'brand-github' },
+        { name: 'Drive', url: 'https://drive.google.com/', icon: 'brand-google-drive' },
+        { name: 'Notion', url: 'https://www.notion.so/', icon: 'brand-notion' },
+        { name: 'Claude', url: 'https://claude.ai/', icon: 'sparkles' },
+      ],
+    },
+  ],
   socials: [
     { name: 'GitHub', url: 'https://github.com/', icon: 'brand-github' },
     { name: 'X', url: 'https://x.com/', icon: 'brand-x' },

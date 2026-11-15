@@ -4,19 +4,20 @@ import { LinksPanel } from '../blocks/LinksPanel'
 import { SocialFooter } from '../blocks/SocialFooter'
 import { WeatherPanel } from '../blocks/WeatherPanel'
 import { Clock } from '../clock/Clock'
-import type { HomeConfig } from '../config'
 import { createMockWeather } from '../weather/mock'
 import { formatStage } from '../workspace/stage'
+import type { LayoutProps } from './LayoutProps'
 
-export function DefaultLayout({ config, stage }: { config: HomeConfig; stage: number }) {
-  const { title, player, clock, weather, links, socials } = config
+export function DefaultLayout({ global, workspace, stage }: LayoutProps) {
+  const { title, player } = global
+  const { clock, weather, linkGroups, socials } = workspace
   const [weatherData] = useState(() => createMockWeather(new Date()))
   return (
     <div className="ac:flex ac:min-h-[calc(100dvh_-_3.5rem)] ac:flex-col ac:gap-5">
       <AcMarquee
         title={title}
         start={{ label: player.label, value: player.text }}
-        end={{ label: config.stage.label, value: formatStage(stage) }}
+        end={{ label: global.stage.label, value: formatStage(stage) }}
       />
       <div className="ac:grid ac:gap-5 ac:md:grid-cols-[1.1fr_1fr]">
         <AcPanel title={clock.title} pellets={clock.pellets}>
@@ -24,7 +25,9 @@ export function DefaultLayout({ config, stage }: { config: HomeConfig; stage: nu
         </AcPanel>
         <WeatherPanel title={weather.title} place={weather.place} data={weatherData} />
       </div>
-      <LinksPanel title={links.title} items={links.items} />
+      {linkGroups.map((group, index) => (
+        <LinksPanel key={`${index}-${group.title}`} title={group.title} items={group.items} />
+      ))}
       <SocialFooter socials={socials} className="ac:mt-auto" />
     </div>
   )

@@ -1,13 +1,31 @@
 import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
 import { App } from './App'
-import { resolveConfig } from './config'
+import {
+  resolveSettings,
+  type DeepPartial,
+  type GlobalConfig,
+  type WorkspaceConfig,
+} from './config'
 
-const render = (overrides: Parameters<typeof resolveConfig>[0], stage = 1) =>
-  renderToStaticMarkup(<App config={resolveConfig(overrides)} stage={stage} />)
+type WorkspaceOverrides = DeepPartial<WorkspaceConfig>
+type GlobalOverrides = DeepPartial<GlobalConfig>
 
-const renderTimeOnly = (overrides: Parameters<typeof resolveConfig>[0], stage = 1) =>
-  render({ layout: 'time-only', ...overrides }, stage)
+const render = (workspace: WorkspaceOverrides = {}, global: GlobalOverrides = {}, stage = 1) => {
+  const settings = resolveSettings({ global, workspaces: [workspace] })
+  return renderToStaticMarkup(
+    <App global={settings.global} workspace={settings.workspaces[0]!} stage={stage} />,
+  )
+}
+
+const renderTimeOnly = (
+  workspace: WorkspaceOverrides = {},
+  global: GlobalOverrides = {},
+  stage = 1,
+) => render({ layout: 'time-only', ...workspace }, global, stage)
+
+const gmail = { name: 'Gmail', url: 'https://mail.google.com/' }
+const github = { name: 'GitHub', url: 'https://github.com/' }
 
 const datePattern = /\d{4}\.\d{2}\.\d{2}/
 
@@ -37,15 +55,15 @@ describe('time-only layout', () => {
     expect(html).toMatch(/<section[^>]*ac:my-6/)
   })
   it('shows the STAGE label and the hex stage number', () => {
-    const html = renderTimeOnly({}, 2)
+    const html = renderTimeOnly({}, {}, 2)
     expect(html).toContain('STAGE')
     expect(html).toContain('0x02')
   })
   it('uses the configured stage label', () => {
-    expect(renderTimeOnly({ stage: { label: 'WORLD' } }, 1)).toContain('WORLD')
+    expect(renderTimeOnly({}, { stage: { label: 'WORLD' } })).toContain('WORLD')
   })
   it('uses the configured greeting and title text', () => {
-    const html = renderTimeOnly({ title: 'ARCADE', player: { text: 'READY' } })
+    const html = renderTimeOnly({}, { title: 'ARCADE', player: { text: 'READY' } })
     expect(html).toContain('ARCADE')
     expect(html).toContain('READY')
     expect(html).not.toContain('HELLO')
@@ -111,17 +129,43 @@ describe('default layout', () => {
     expect(render({})).toContain('ti-brand-gmail')
   })
   it('falls back to the first letter for a link without an icon', () => {
-    const html = render({ links: { items: [{ name: 'Wiki', url: 'https://wiki.example/' }] } })
+    const html = render({
+      linkGroups: [{ title: 'LINKS', items: [{ name: 'Wiki', url: 'https://wiki.example/' }] }],
+    })
     expect(html).toMatch(/aria-hidden="true">W</)
   })
   it('treats an empty icon as no icon', () => {
     const html = render({
-      links: { items: [{ name: 'Wiki', url: 'https://wiki.example/', icon: '' }] },
+      linkGroups: [
+        { title: 'LINKS', items: [{ name: 'Wiki', url: 'https://wiki.example/', icon: '' }] },
+      ],
     })
     expect(html).toMatch(/aria-hidden="true">W</)
   })
   it('hides the links panel when there are no links', () => {
-    expect(render({ links: { items: [] } })).not.toContain('LINKS')
+    expect(render({ linkGroups: [{ title: 'LINKS', items: [] }] })).not.toContain('LINKS')
+  })
+  it('shows one panel per link group, stacked in order', () => {
+    const html = render({
+      linkGroups: [
+        { title: 'WORK', items: [gmail] },
+        { title: 'DEV', items: [github] },
+      ],
+    })
+    expect(html).toContain('WORK')
+    expect(html).toContain('DEV')
+    expect(html.indexOf('WORK')).toBeLessThan(html.indexOf('DEV'))
+    expect(html).not.toContain('LINKS')
+  })
+  it('skips a link group with no links', () => {
+    const html = render({
+      linkGroups: [
+        { title: 'EMPTY', items: [] },
+        { title: 'DEV', items: [github] },
+      ],
+    })
+    expect(html).not.toContain('EMPTY')
+    expect(html).toContain('DEV')
   })
   it('hides the footer when there are no socials', () => {
     expect(render({ socials: [] })).not.toContain('<footer')
