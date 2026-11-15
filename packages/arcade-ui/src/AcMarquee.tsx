@@ -1,9 +1,11 @@
 import { clsx } from 'clsx'
-import type { ComponentProps, ReactNode } from 'react'
+import type { ComponentProps, MouseEventHandler, ReactNode } from 'react'
 
 export type AcMarqueeScore = {
   label: ReactNode
   value: ReactNode
+  hint?: string
+  onDoubleClick?: MouseEventHandler<HTMLDivElement>
 }
 
 export type AcMarqueeProps = Omit<ComponentProps<'header'>, 'title'> & {
@@ -26,14 +28,18 @@ const heading = clsx(
 const score = 'ac:items-baseline ac:justify-center ac:gap-1.5 ac:md:flex-col ac:md:justify-start'
 
 function Score({
-  score: { label, value },
+  score: { label, value, hint, onDoubleClick },
   className,
 }: {
   score: AcMarqueeScore
   className?: string
 }) {
   return (
-    <div className={clsx(score, className)}>
+    <div
+      className={clsx(score, { 'ac:cursor-pointer ac:select-none': onDoubleClick }, className)}
+      title={hint}
+      onDoubleClick={onDoubleClick}
+    >
       <span className="ac:text-danger">{label}</span>
       <span>{value}</span>
     </div>

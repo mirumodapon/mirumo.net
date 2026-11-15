@@ -1,9 +1,10 @@
 import { AcMarquee, AcPanel } from '@mirumo/arcade-ui'
 import { Clock } from '../clock/Clock'
-import { formatStage } from '../workspace/stage'
 import type { LayoutProps } from './LayoutProps'
+import { stageScore } from './stageScore'
 
-export function TimeOnlyLayout({ global, workspace, stage }: LayoutProps) {
+export function TimeOnlyLayout(props: LayoutProps) {
+  const { global, workspace } = props
   const { title, player } = global
   const { clock } = workspace
   return (
@@ -11,7 +12,7 @@ export function TimeOnlyLayout({ global, workspace, stage }: LayoutProps) {
       <AcMarquee
         title={title}
         start={{ label: player.label, value: player.text }}
-        end={{ label: global.stage.label, value: formatStage(stage) }}
+        end={stageScore(props)}
       />
       <AcPanel title={clock.title} pellets={clock.pellets} className="ac:my-6 ac:self-center">
         <div className="ac:text-center">

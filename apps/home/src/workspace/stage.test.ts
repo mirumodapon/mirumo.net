@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { formatStage, parseStage } from './stage'
+import { formatStage, nextStage, parseStage } from './stage'
 
 describe('parseStage', () => {
   it('defaults to 1 without a hash', () => expect(parseStage('', 3)).toBe(1))
@@ -22,4 +22,10 @@ describe('formatStage', () => {
     expect([1, 10, 255].map(formatStage)).toEqual(['0x01', '0x0A', '0xFF'])
   })
   it('grows past two digits', () => expect(formatStage(256)).toBe('0x100'))
+})
+
+describe('nextStage', () => {
+  it('moves to the next workspace', () => expect(nextStage(1, 3)).toBe(2))
+  it('wraps from the last workspace to the first', () => expect(nextStage(3, 3)).toBe(1))
+  it('stays put with a single workspace', () => expect(nextStage(1, 1)).toBe(1))
 })

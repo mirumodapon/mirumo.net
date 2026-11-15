@@ -1,5 +1,6 @@
 import { AcMarquee } from '@mirumo/arcade-ui'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { useState } from 'react'
 
 const title = (
   <>
@@ -40,3 +41,21 @@ export const TitleOnly: Story = { args: { start: undefined, end: undefined } }
 export const Mobile: Story = {
   globals: { viewport: { value: 'mobile1' } },
 }
+
+function DoubleClickDemo() {
+  const [stage, setStage] = useState(1)
+  return (
+    <AcMarquee
+      title={title}
+      start={{ label: '1UP', value: 'GOOD MORNING' }}
+      end={{
+        label: 'STAGE',
+        value: `0x${String(stage).padStart(2, '0')}`,
+        hint: 'Double-click to advance',
+        onDoubleClick: () => setStage((value) => (value >= 3 ? 1 : value + 1)),
+      }}
+    />
+  )
+}
+
+export const DoubleClick: Story = { render: () => <DoubleClickDemo /> }

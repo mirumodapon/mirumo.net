@@ -3,7 +3,7 @@ import { App } from './App'
 import { SettingsButton } from './settings/SettingsButton'
 import { SettingsDialog } from './settings/SettingsDialog'
 import { useSettings, type SettingsStore } from './settings/store'
-import { parseStage } from './workspace/stage'
+import { formatStage, nextStage, parseStage } from './workspace/stage'
 import { useHash } from './workspace/useHash'
 
 export function Root({ store }: { store: SettingsStore }) {
@@ -18,7 +18,18 @@ export function Root({ store }: { store: SettingsStore }) {
   }
   return (
     <>
-      <App global={settings.global} workspace={settings.workspaces[stage - 1]!} stage={stage} />
+      <App
+        global={settings.global}
+        workspace={settings.workspaces[stage - 1]!}
+        stage={stage}
+        onNextStage={
+          settings.workspaces.length > 1
+            ? () => {
+                window.location.hash = formatStage(nextStage(stage, settings.workspaces.length))
+              }
+            : undefined
+        }
+      />
       {!open && <SettingsButton onOpen={openSettings} />}
       <SettingsDialog
         key={session}

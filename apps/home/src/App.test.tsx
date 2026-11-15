@@ -174,3 +174,31 @@ describe('default layout', () => {
     expect(render({ weather: { place: 'TOKYO' } })).toContain('TOKYO')
   })
 })
+
+describe('switching workspaces from the STAGE block', () => {
+  const renderWith = (layout: WorkspaceOverrides['layout'], onNextStage?: () => void) => {
+    const settings = resolveSettings({ workspaces: [{ layout }] })
+    return renderToStaticMarkup(
+      <App
+        global={settings.global}
+        workspace={settings.workspaces[0]!}
+        stage={1}
+        onNextStage={onNextStage}
+      />,
+    )
+  }
+  const stageBlock = /<div[^>]*title="雙擊切換 workspace"[^>]*>(?:(?!<\/div>).)*STAGE/
+
+  it('hints the double-click on the STAGE block in the default and time-only layouts', () => {
+    for (const layout of ['default', 'time-only'] as const) {
+      const html = renderWith(layout, () => {})
+      expect(html).toMatch(stageBlock)
+      expect(html).toMatch(
+        /<div[^>]*ac:select-none[^>]*title="雙擊切換 workspace"|<div[^>]*title="雙擊切換 workspace"[^>]*ac:select-none/,
+      )
+    }
+  })
+  it('adds no hint without a switch handler', () => {
+    expect(renderWith('default')).not.toContain('雙擊切換 workspace')
+  })
+})

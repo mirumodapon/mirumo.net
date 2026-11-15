@@ -12,11 +12,12 @@ const layouts: Record<HomeLayout, ComponentType<LayoutProps>> = {
   'time-only': TimeOnlyLayout,
 }
 
-export function App({ global, workspace, stage }: LayoutProps) {
+export function App(props: LayoutProps) {
+  const { global, workspace } = props
   const Layout = layouts[workspace.layout]
   return (
     <AcScreen scanlines={global.screen.scanlines}>
-      <Layout global={global} workspace={workspace} stage={stage} />
+      <Layout {...props} />
     </AcScreen>
   )
 }

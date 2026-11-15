@@ -13,3 +13,7 @@ export function parseStage(hash: string, count: number): number {
 export function formatStage(stage: number): string {
   return `0x${stage.toString(16).toUpperCase().padStart(2, '0')}`
 }
+
+export function nextStage(stage: number, count: number): number {
+  return stage >= count ? 1 : stage + 1
+}

@@ -5,10 +5,11 @@ import { SocialFooter } from '../blocks/SocialFooter'
 import { WeatherPanel } from '../blocks/WeatherPanel'
 import { Clock } from '../clock/Clock'
 import { createMockWeather } from '../weather/mock'
-import { formatStage } from '../workspace/stage'
 import type { LayoutProps } from './LayoutProps'
+import { stageScore } from './stageScore'
 
-export function DefaultLayout({ global, workspace, stage }: LayoutProps) {
+export function DefaultLayout(props: LayoutProps) {
+  const { global, workspace } = props
   const { title, player } = global
   const { clock, weather, linkGroups, socials } = workspace
   const [weatherData] = useState(() => createMockWeather(new Date()))
@@ -17,7 +18,7 @@ export function DefaultLayout({ global, workspace, stage }: LayoutProps) {
       <AcMarquee
         title={title}
         start={{ label: player.label, value: player.text }}
-        end={{ label: global.stage.label, value: formatStage(stage) }}
+        end={stageScore(props)}
       />
       <div className="ac:grid ac:gap-5 ac:md:grid-cols-[1.1fr_1fr]">
         <AcPanel title={clock.title} pellets={clock.pellets}>
