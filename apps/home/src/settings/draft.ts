@@ -21,11 +21,6 @@ export function deleteWorkspace(settings: HomeSettings, index: number): HomeSett
   return { ...settings, workspaces: removeAt(settings.workspaces, index) }
 }
 
-export function selectionAfterDelete(selected: number, deleted: number): number {
-  if (selected === deleted) return 0
-  return selected > deleted ? selected - 1 : selected
-}
-
 function trimDeep<T>(value: T): T {
   if (typeof value === 'string') return value.trim() as T
   if (Array.isArray(value)) return value.map(trimDeep) as T

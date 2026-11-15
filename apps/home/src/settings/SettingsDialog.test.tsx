@@ -69,11 +69,24 @@ describe('SettingsDialog', () => {
   it('does not allow deleting the only workspace', () => {
     expect(renderDialog()).toMatch(disabledButton('刪除 0x01'))
   })
-  it('opens on the current stage', () => {
+  it('lists GLOBAL first, then one tab per workspace', () => {
+    const html = renderDialog({ workspaces: [{}, {}, {}] })
+    const tabs = [...html.matchAll(/role="tab"[^>]*>([^<]*)</g)].map((match) => match[1])
+    expect(tabs).toEqual(['GLOBAL', 'STAGE 0x01', 'STAGE 0x02', 'STAGE 0x03'])
+  })
+  it('opens on the current workspace tab', () => {
     const html = renderDialog({ workspaces: [{}, { weather: { place: 'TOKYO' } }] }, 2)
-    expect(html).toContain('STAGE 0x02')
+    const selected = [...html.matchAll(/role="tab"[^>]*aria-selected="true"[^>]*>([^<]*)</g)]
+    expect(selected.map((match) => match[1])).toEqual(['STAGE 0x02'])
     expect(html).toContain('value="TOKYO"')
     expect(html).not.toMatch(disabledButton('刪除 0x02'))
+  })
+  it('keeps every workspace editable in its own panel', () => {
+    const html = renderDialog({
+      workspaces: [{ weather: { place: 'TAIPEI' } }, { weather: { place: 'TOKYO' } }],
+    })
+    expect(html).toContain('value="TAIPEI"')
+    expect(html).toContain('value="TOKYO"')
   })
 })
 
@@ -84,6 +97,8 @@ describe('SettingsDialog scrolling', () => {
     expect(dialogTag).not.toContain('ac:overflow-auto')
     expect(dialogTag).toContain('ac:open:flex')
     expect(html).toMatch(/<div role="tablist"[^>]*ac:shrink-0/)
+    expect(html).toMatch(/<div role="tablist"[^>]*ac:overflow-x-auto/)
+    expect(html).not.toMatch(/<div role="tablist"[^>]*ac:flex-wrap/)
     expect(html).toMatch(/<div role="tabpanel"[^>]*ac:overflow-auto/)
     const footerIndex = html.lastIndexOf('儲存')
     const lastPanelEnd = html.lastIndexOf('role="tabpanel"')

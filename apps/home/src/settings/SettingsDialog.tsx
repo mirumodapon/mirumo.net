@@ -1,5 +1,5 @@
-import { AcButton, AcDialog, AcTabs } from '@mirumo/arcade-ui'
-import { useState } from 'react'
+import { AcButton, AcDialog, AcTabs, type AcTab } from '@mirumo/arcade-ui'
+import { useEffect, useRef, useState } from 'react'
 import type { HomeSettings, WorkspaceConfig } from '../config'
 import { formatStage } from '../workspace/stage'
 import { normalizeSettings } from './draft'
@@ -15,6 +15,8 @@ export type SettingsDialogProps = {
   onReset: () => void
 }
 
+const stageTab = (index: number) => `stage-${index}`
+
 export function SettingsDialog({
   open,
   settings,
@@ -24,15 +26,35 @@ export function SettingsDialog({
   onReset,
 }: SettingsDialogProps) {
   const [draft, setDraft] = useState(settings)
-  const [selected, setSelected] = useState(stage - 1)
+  const [tab, setTab] = useState(stageTab(stage - 1))
+  const tabsRef = useRef<HTMLDivElement>(null)
 
-  const index = Math.min(selected, draft.workspaces.length - 1)
-  const workspace = draft.workspaces[index]!
-  const setWorkspace = (next: WorkspaceConfig) =>
+  useEffect(() => {
+    if (!open) return
+    tabsRef.current?.querySelector<HTMLElement>('[role="tab"][aria-selected="true"]')?.focus()
+  }, [open])
+
+  const setWorkspace = (index: number, next: WorkspaceConfig) =>
     setDraft({
       ...draft,
       workspaces: draft.workspaces.map((item, i) => (i === index ? next : item)),
     })
+
+  const tabs: AcTab[] = [
+    {
+      id: 'global',
+      label: 'GLOBAL',
+      content: <GlobalTab settings={draft} onChange={setDraft} onReset={onReset} />,
+    },
+    ...draft.workspaces.map((workspace, index) => ({
+      id: stageTab(index),
+      label: `STAGE ${formatStage(index + 1)}`,
+      content: (
+        <WorkspaceTab workspace={workspace} onChange={(next) => setWorkspace(index, next)} />
+      ),
+    })),
+  ]
+  const value = tabs.some((item) => item.id === tab) ? tab : 'global'
 
   return (
     <AcDialog
@@ -49,30 +71,15 @@ export function SettingsDialog({
         </>
       }
     >
-      <AcTabs
-        aria-label="SETTINGS"
-        className="ac:flex-1"
-        tabs={[
-          {
-            id: 'workspace',
-            label: `STAGE ${formatStage(index + 1)}`,
-            content: <WorkspaceTab workspace={workspace} onChange={setWorkspace} />,
-          },
-          {
-            id: 'global',
-            label: 'GLOBAL',
-            content: (
-              <GlobalTab
-                settings={draft}
-                selected={index}
-                onSelect={setSelected}
-                onChange={setDraft}
-                onReset={onReset}
-              />
-            ),
-          },
-        ]}
-      />
+      <div ref={tabsRef} className="ac:flex ac:min-h-0 ac:flex-1 ac:flex-col">
+        <AcTabs
+          aria-label="SETTINGS"
+          className="ac:flex-1"
+          tabs={tabs}
+          value={value}
+          onValueChange={setTab}
+        />
+      </div>
     </AcDialog>
   )
 }

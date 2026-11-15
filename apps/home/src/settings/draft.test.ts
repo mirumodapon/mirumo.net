@@ -1,13 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { defaultWorkspace, resolveSettings } from '../config'
-import {
-  addWorkspace,
-  deleteWorkspace,
-  moveItem,
-  normalizeSettings,
-  removeAt,
-  selectionAfterDelete,
-} from './draft'
+import { addWorkspace, deleteWorkspace, moveItem, normalizeSettings, removeAt } from './draft'
 
 describe('moveItem', () => {
   it('moves an item by one step', () =>
@@ -44,11 +37,6 @@ describe('workspaces', () => {
   it('never deletes the last workspace', () => {
     const settings = resolveSettings({})
     expect(deleteWorkspace(settings, 0)).toBe(settings)
-  })
-  it('moves the selection after a delete', () => {
-    expect(selectionAfterDelete(1, 1)).toBe(0)
-    expect(selectionAfterDelete(2, 1)).toBe(1)
-    expect(selectionAfterDelete(0, 1)).toBe(0)
   })
 })
 
