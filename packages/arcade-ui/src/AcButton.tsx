@@ -44,9 +44,9 @@ const variants: Record<AcButtonVariant, string> = {
 }
 
 const sizes: Record<AcButtonSize, { button: string; label: string; icon: string }> = {
-  sm: { button: 'ac:h-7 ac:gap-1.5 ac:text-[8px]', label: 'ac:px-2.5', icon: 'ac:text-[12px]' },
-  md: { button: 'ac:h-10 ac:gap-2 ac:text-[10px]', label: 'ac:px-3.5', icon: 'ac:text-[14px]' },
-  lg: { button: 'ac:h-13 ac:gap-2.5 ac:text-[12px]', label: 'ac:px-5', icon: 'ac:text-[18px]' },
+  sm: { button: 'ac:h-7 ac:gap-1.5 ac:text-[8px]', label: 'ac:px-2.5', icon: 'ac:text-[14px]' },
+  md: { button: 'ac:h-10 ac:gap-2 ac:text-[10px]', label: 'ac:px-3.5', icon: 'ac:text-[16px]' },
+  lg: { button: 'ac:h-13 ac:gap-2.5 ac:text-[12px]', label: 'ac:px-5', icon: 'ac:text-[22px]' },
 }
 
 const square = 'ac:aspect-square ac:px-0'
