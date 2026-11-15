@@ -166,3 +166,9 @@ describe('weather settings', () => {
     expect(html).not.toContain('aria-label="搜尋城市"')
   })
 })
+
+describe('settings rows on narrow screens', () => {
+  it('splits each link row in two below 480px', () => {
+    expect(renderDialog()).toContain('ac:max-[480px]:grid-cols-')
+  })
+})

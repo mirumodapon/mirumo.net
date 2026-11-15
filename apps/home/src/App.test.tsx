@@ -246,3 +246,9 @@ describe('clock layout title bar', () => {
     expect(html).toContain('<header')
   })
 })
+
+describe('touch screens', () => {
+  it('leaves room at the bottom for the always-visible gear', () => {
+    expect(render({})).toContain('ac:[@media(hover:none)]:pb-16')
+  })
+})

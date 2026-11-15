@@ -47,6 +47,12 @@ describe('refreshing from the update time', () => {
       /<time(?=[^>]*title="雙擊重新取得天氣")(?=[^>]*ac:select-none)(?=[^>]*dateTime="2026-11-15T)[^>]*>14:05<\/time>/i,
     )
   })
+  it('lets a touch double tap refresh without zooming', () => {
+    const html = renderToStaticMarkup(
+      <WeatherPanel title="WEATHER" place="TAIPEI" state={ready} onRefresh={() => {}} />,
+    )
+    expect(html).toMatch(/<time[^>]*style="touch-action:manipulation"/)
+  })
   it('shows a plain time without a refresh handler', () => {
     expect(render(ready)).not.toContain('雙擊重新取得天氣')
   })

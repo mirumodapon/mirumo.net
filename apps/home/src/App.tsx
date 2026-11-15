@@ -19,7 +19,7 @@ export function App(props: LayoutProps) {
   const marqueeOnPage =
     workspace.layout === 'clock' ? workspace.clockLayout.marquee : global.marquee.visible
   return (
-    <AcScreen scanlines={global.screen.scanlines}>
+    <AcScreen scanlines={global.screen.scanlines} className="ac:[@media(hover:none)]:pb-16">
       {!marqueeOnPage && <MarqueeReveal {...props} />}
       <Layout {...props} />
     </AcScreen>

@@ -1,4 +1,4 @@
-import { AcIcon, AcPanel } from '@mirumo/arcade-ui'
+import { AcIcon, AcPanel, useDoubleTap } from '@mirumo/arcade-ui'
 import { describeWeather } from '../weather/codes'
 import type { WeatherData } from '../weather/types'
 import type { WeatherState } from '../weather/useWeather'
@@ -59,6 +59,7 @@ function WeatherBody({
 }) {
   const { current, daily } = data
   const now = describeWeather(current.weather_code)
+  const refreshTap = useDoubleTap<HTMLElement>(onRefresh)
   return (
     <>
       <div className="ac:flex ac:items-center ac:gap-4.5">
@@ -84,7 +85,7 @@ function WeatherBody({
           <time
             dateTime={new Date(fetchedAt).toISOString()}
             title={onRefresh ? '雙擊重新取得天氣' : undefined}
-            onDoubleClick={onRefresh}
+            {...refreshTap}
             className={onRefresh ? 'ac:cursor-pointer ac:select-none' : undefined}
           >
             {updatedAt(fetchedAt)}
