@@ -69,7 +69,13 @@ describe('defaults', () => {
     expect(defaultWorkspace).toMatchObject({
       layout: 'default',
       clockLayout: { marquee: false },
-      weather: { title: 'WEATHER', place: 'TAIPEI' },
+      weather: {
+        title: 'WEATHER',
+        place: 'TAIPEI',
+        source: 'fixed',
+        latitude: 25.033,
+        longitude: 121.5654,
+      },
     })
     expect(defaultWorkspace.linkGroups).toHaveLength(1)
     const [group] = defaultWorkspace.linkGroups

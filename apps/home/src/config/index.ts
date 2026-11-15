@@ -8,6 +8,7 @@ export type {
   HomeLinkGroup,
   HomeSettings,
   HomeSocial,
+  WeatherSource,
   WorkspaceConfig,
 } from './defaults'
 export { defaultGlobal, defaultWorkspace } from './defaults'

@@ -1,17 +1,22 @@
 import { AcPanel } from '@mirumo/arcade-ui'
-import { useState } from 'react'
 import { LinksPanel } from '../blocks/LinksPanel'
 import { SocialFooter } from '../blocks/SocialFooter'
 import { WeatherPanel } from '../blocks/WeatherPanel'
 import { Clock } from '../clock/Clock'
-import { createMockWeather } from '../weather/mock'
+import { usePosition } from '../weather/usePosition'
+import { useWeather } from '../weather/useWeather'
 import type { LayoutProps } from './LayoutProps'
 import { PageMarquee } from './PageMarquee'
 
 export function DefaultLayout(props: LayoutProps) {
   const { global, workspace } = props
   const { clock, weather, linkGroups, socials } = workspace
-  const [weatherData] = useState(() => createMockWeather(new Date()))
+  const position = usePosition(weather.source === 'current')
+  const coords =
+    weather.source === 'fixed'
+      ? { latitude: weather.latitude, longitude: weather.longitude }
+      : position.coords
+  const weatherState = useWeather(coords)
   return (
     <div className="ac:flex ac:min-h-[calc(100dvh_-_3.5rem)] ac:flex-col ac:gap-5">
       {global.marquee.visible && <PageMarquee {...props} />}
@@ -19,7 +24,11 @@ export function DefaultLayout(props: LayoutProps) {
         <AcPanel title={clock.title} pellets={clock.pellets}>
           <Clock seconds={clock.seconds} date={clock.date} />
         </AcPanel>
-        <WeatherPanel title={weather.title} place={weather.place} data={weatherData} />
+        <WeatherPanel
+          title={weather.title}
+          place={weather.place}
+          state={position.pending ? { status: 'loading' } : weatherState}
+        />
       </div>
       {linkGroups.map((group, index) => (
         <LinksPanel key={`${index}-${group.title}`} title={group.title} items={group.items} />

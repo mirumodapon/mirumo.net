@@ -2,6 +2,8 @@ import type { AcPanelCorner } from '@mirumo/arcade-ui'
 
 export type HomeLayout = 'default' | 'time-only' | 'clock'
 
+export type WeatherSource = 'fixed' | 'current'
+
 export type HomeLink = { name: string; url: string; icon?: string }
 
 export type HomeLinkGroup = { title: string; items: HomeLink[] }
@@ -24,7 +26,13 @@ export type WorkspaceConfig = {
     seconds: boolean
     date: boolean
   }
-  weather: { title: string; place: string }
+  weather: {
+    title: string
+    place: string
+    source: WeatherSource
+    latitude: number
+    longitude: number
+  }
   clockLayout: { marquee: boolean }
   linkGroups: HomeLinkGroup[]
   socials: HomeSocial[]
@@ -48,7 +56,13 @@ export const defaultWorkspace: WorkspaceConfig = {
     seconds: true,
     date: true,
   },
-  weather: { title: 'WEATHER', place: 'TAIPEI' },
+  weather: {
+    title: 'WEATHER',
+    place: 'TAIPEI',
+    source: 'fixed',
+    latitude: 25.033,
+    longitude: 121.5654,
+  },
   clockLayout: { marquee: false },
   linkGroups: [
     {

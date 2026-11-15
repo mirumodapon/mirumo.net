@@ -1,12 +1,24 @@
 import { AcIcon, AcPanel } from '@mirumo/arcade-ui'
 import { describeWeather } from '../weather/codes'
 import type { WeatherData } from '../weather/types'
+import type { WeatherState } from '../weather/useWeather'
 
-export type WeatherPanelProps = { title: string; place: string; data: WeatherData }
+export type WeatherPanelProps = { title: string; place: string; state: WeatherState }
 
-export function WeatherPanel({ title, place, data }: WeatherPanelProps) {
-  const { current, daily } = data
-  const now = describeWeather(current.weather_code)
+const messages = {
+  loading: 'LOADING',
+  unavailable: 'WEATHER UNAVAILABLE',
+  'no-location': 'NO LOCATION',
+} as const
+
+const pad = (n: number) => String(n).padStart(2, '0')
+
+function updatedAt(fetchedAt: number): string {
+  const date = new Date(fetchedAt)
+  return `${pad(date.getHours())}:${pad(date.getMinutes())}`
+}
+
+export function WeatherPanel({ title, place, state }: WeatherPanelProps) {
   return (
     <AcPanel
       title={
@@ -16,6 +28,22 @@ export function WeatherPanel({ title, place, data }: WeatherPanelProps) {
       }
       pellets={['tr', 'bl']}
     >
+      {state.entry ? (
+        <WeatherBody data={state.entry.data} fetchedAt={state.entry.fetchedAt} />
+      ) : (
+        <p className="ac:m-0 ac:text-muted">
+          {messages[state.status === 'ready' ? 'loading' : state.status]}
+        </p>
+      )}
+    </AcPanel>
+  )
+}
+
+function WeatherBody({ data, fetchedAt }: { data: WeatherData; fetchedAt: number }) {
+  const { current, daily } = data
+  const now = describeWeather(current.weather_code)
+  return (
+    <>
       <div className="ac:flex ac:items-center ac:gap-4.5">
         <AcIcon name={now.icon} className="ac:text-[46px] ac:leading-none ac:text-primary" />
         <div>
@@ -34,7 +62,8 @@ export function WeatherPanel({ title, place, data }: WeatherPanelProps) {
         <span className="ac:text-warning">HI {Math.round(daily.temperature_2m_max[0] ?? 0)}°</span>
         <span className="ac:text-info">LO {Math.round(daily.temperature_2m_min[0] ?? 0)}°</span>
         <span>RAIN {daily.precipitation_probability_max[0] ?? 0}%</span>
+        <span>UPDATED {updatedAt(fetchedAt)}</span>
       </div>
-    </AcPanel>
+    </>
   )
 }
