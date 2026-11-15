@@ -3,8 +3,8 @@ import { describe, expect, it } from 'vitest'
 import { App } from './App'
 import { resolveConfig } from './config'
 
-const render = (overrides: Parameters<typeof resolveConfig>[0]) =>
-  renderToStaticMarkup(<App config={resolveConfig(overrides)} />)
+const render = (overrides: Parameters<typeof resolveConfig>[0], stage = 1) =>
+  renderToStaticMarkup(<App config={resolveConfig(overrides)} stage={stage} />)
 
 const datePattern = /\d{4}\.\d{2}\.\d{2}/
 
@@ -33,6 +33,14 @@ describe('time-only layout (default)', () => {
     expect(html).not.toMatch(/ac:grid-rows-\[auto_1fr\][^"]*ac:gap-/)
     expect(html).toMatch(/<section[^>]*ac:my-6/)
   })
+  it('shows the STAGE label and the hex stage number', () => {
+    const html = render({}, 2)
+    expect(html).toContain('STAGE')
+    expect(html).toContain('0x02')
+  })
+  it('uses the configured stage label', () => {
+    expect(render({ stage: { label: 'WORLD' } }, 1)).toContain('WORLD')
+  })
   it('uses the configured greeting and title text', () => {
     const html = render({ title: 'ARCADE', player: { text: 'READY' } })
     expect(html).toContain('ARCADE')
@@ -52,6 +60,7 @@ describe('clock layout', () => {
     expect(html).toMatch(/\d{2}:\d{2}/)
     expect(html).not.toContain('MIRUMO')
     expect(html).not.toContain('1UP')
+    expect(html).not.toContain('STAGE')
     expect(html).not.toContain('TIME')
     expect(html).not.toMatch(datePattern)
   })
