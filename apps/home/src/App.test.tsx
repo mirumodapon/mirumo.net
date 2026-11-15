@@ -25,6 +25,10 @@ const renderTimeOnly = (
 ) => render({ layout: 'time-only', ...workspace }, global, stage)
 
 const gmail = { name: 'Gmail', url: 'https://mail.google.com/' }
+const withLinks: WorkspaceOverrides = {
+  linkGroups: [{ title: 'LINKS', items: [{ ...gmail, icon: 'brand-gmail' }] }],
+  socials: [{ name: 'X', url: 'https://x.com/', icon: 'brand-x' }],
+}
 const github = { name: 'GitHub', url: 'https://github.com/' }
 
 const datePattern = /\d{4}\.\d{2}\.\d{2}/
@@ -89,7 +93,7 @@ describe('clock layout', () => {
 
 describe('default layout', () => {
   it('shows the marquee, time, weather, links and social footer', () => {
-    const html = render({})
+    const html = render(withLinks)
     for (const text of [
       'STAGE',
       'TIME',
@@ -119,7 +123,7 @@ describe('default layout', () => {
     expect(html).toMatch(/<footer[^>]*ac:mt-auto/)
   })
   it('shows each link icon in its badge', () => {
-    expect(render({})).toContain('ti-brand-gmail')
+    expect(render(withLinks)).toContain('ti-brand-gmail')
   })
   it('falls back to the first letter for a link without an icon', () => {
     const html = render({

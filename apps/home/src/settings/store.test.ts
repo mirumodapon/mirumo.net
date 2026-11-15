@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest'
-import { resolveSettings } from '../config'
+import { defaultWorkspace, resolveSettings } from '../config'
 import { createSettingsStore, STORAGE_KEY, type StorageLike } from './store'
 
 const file = resolveSettings({ global: { title: 'FILE' } })
@@ -45,7 +45,8 @@ describe('createSettingsStore', () => {
     const stored = JSON.stringify({ workspaces: [{ layout: 'clock' }] })
     const workspace = createSettingsStore(file, memoryStorage(stored)).getSnapshot().workspaces[0]!
     expect(workspace.layout).toBe('clock')
-    expect(workspace.linkGroups[0]!.items).toHaveLength(6)
+    expect(workspace.linkGroups).toEqual(defaultWorkspace.linkGroups)
+    expect(workspace.socials).toEqual(defaultWorkspace.socials)
   })
   it('saves to storage, updates the snapshot and notifies once', () => {
     const storage = memoryStorage()

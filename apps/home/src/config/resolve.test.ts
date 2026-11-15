@@ -17,7 +17,6 @@ describe('resolveSettings', () => {
     const [a, b] = resolveSettings({ workspaces: [{ linkGroups: [] }, {}] }).workspaces
     expect(a!.linkGroups).toEqual([])
     expect(b!.linkGroups).toEqual(defaultWorkspace.linkGroups)
-    expect(b!.linkGroups[0]!.items).toHaveLength(6)
   })
   it('replaces arrays instead of merging them', () => {
     const settings = resolveSettings({ workspaces: [{ clock: { pellets: ['tr'] } }] })
@@ -65,7 +64,7 @@ describe('defaults', () => {
       marquee: { visible: true },
     })
   })
-  it('starts each workspace with the default layout and the prototype content', () => {
+  it('starts each workspace with the default layout, no links and the owner socials', () => {
     expect(defaultWorkspace).toMatchObject({
       layout: 'default',
       clockLayout: { marquee: false },
@@ -77,27 +76,10 @@ describe('defaults', () => {
         longitude: 121.5654,
       },
     })
-    expect(defaultWorkspace.linkGroups).toHaveLength(1)
-    const [group] = defaultWorkspace.linkGroups
-    expect(group!.title).toBe('LINKS')
-    expect(group!.items.map((item) => item.icon)).toEqual([
-      'brand-gmail',
-      'calendar',
-      'brand-github',
-      'brand-google-drive',
-      'brand-notion',
-      'sparkles',
+    expect(defaultWorkspace.linkGroups).toEqual([{ title: 'LINKS', items: [] }])
+    expect(defaultWorkspace.socials).toEqual([
+      { name: 'GitHub', url: 'https://github.com/mirumodapon', icon: 'brand-github' },
+      { name: 'Instagram', url: 'https://www.instagram.com/mirumo_0915', icon: 'brand-instagram' },
     ])
-    expect(group!.items[0]).toEqual({
-      name: 'Gmail',
-      url: 'https://mail.google.com/',
-      icon: 'brand-gmail',
-    })
-    expect(defaultWorkspace.socials).toHaveLength(4)
-    expect(defaultWorkspace.socials[0]).toEqual({
-      name: 'GitHub',
-      url: 'https://github.com/',
-      icon: 'brand-github',
-    })
   })
 })

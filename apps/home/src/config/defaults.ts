@@ -67,20 +67,12 @@ export const defaultWorkspace: WorkspaceConfig = {
   linkGroups: [
     {
       title: 'LINKS',
-      items: [
-        { name: 'Gmail', url: 'https://mail.google.com/', icon: 'brand-gmail' },
-        { name: 'Calendar', url: 'https://calendar.google.com/', icon: 'calendar' },
-        { name: 'GitHub', url: 'https://github.com/', icon: 'brand-github' },
-        { name: 'Drive', url: 'https://drive.google.com/', icon: 'brand-google-drive' },
-        { name: 'Notion', url: 'https://www.notion.so/', icon: 'brand-notion' },
-        { name: 'Claude', url: 'https://claude.ai/', icon: 'sparkles' },
-      ],
+      items: [],
     },
   ],
   socials: [
-    { name: 'GitHub', url: 'https://github.com/', icon: 'brand-github' },
-    { name: 'X', url: 'https://x.com/', icon: 'brand-x' },
-    { name: 'Instagram', url: 'https://www.instagram.com/', icon: 'brand-instagram' },
-    { name: 'LinkedIn', url: 'https://www.linkedin.com/', icon: 'brand-linkedin' },
+    { name: 'GitHub', url: 'https://github.com/mirumodapon', icon: 'brand-github' },
+    { name: 'Instagram', url: 'https://www.instagram.com/mirumo_0915', icon: 'brand-instagram' },
+    { name: 'X', url: 'https://x.com/mirudapon', icon: 'brand-x' },
   ],
 }

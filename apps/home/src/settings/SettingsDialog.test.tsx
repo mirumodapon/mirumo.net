@@ -18,6 +18,20 @@ const renderDialog = (file: Parameters<typeof resolveSettings>[0] = {}, stage = 
     />,
   )
 
+const sixLinks = ['Gmail', 'Calendar', 'GitHub', 'Drive', 'Notion', 'Claude'].map((name) => ({
+  name,
+  url: `https://${name.toLowerCase()}.example/`,
+}))
+
+const fourSocials = ['GitHub', 'X', 'Instagram', 'LinkedIn'].map((name) => ({
+  name,
+  url: `https://${name.toLowerCase()}.example/`,
+}))
+
+const withLinks = {
+  workspaces: [{ linkGroups: [{ title: 'LINKS', items: sixLinks }], socials: fourSocials }],
+}
+
 const disabledButton = (label: string) =>
   new RegExp(`<button(?=[^>]*aria-label="${label}")(?=[^>]*\\sdisabled="")[^>]*>`)
 
@@ -29,7 +43,7 @@ describe('SettingsDialog', () => {
     }
   })
   it('edits the current workspace', () => {
-    const html = renderDialog()
+    const html = renderDialog(withLinks)
     for (const text of [
       '<option value="default"',
       '<option value="time-only"',
@@ -50,7 +64,7 @@ describe('SettingsDialog', () => {
     }
   })
   it('disables moving the first row up and the last row down', () => {
-    const html = renderDialog()
+    const html = renderDialog(withLinks)
     expect(html).toMatch(disabledButton('連結 1 上移'))
     expect(html).toMatch(disabledButton('連結 6 下移'))
     expect(html).not.toMatch(disabledButton('連結 2 上移'))
