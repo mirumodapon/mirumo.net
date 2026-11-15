@@ -31,6 +31,7 @@ export function DefaultLayout(props: LayoutProps) {
           title={weather.title}
           place={placeLabel(weather, placeName)}
           state={position.pending ? { status: 'loading' } : weatherState}
+          onRefresh={coords ? weatherState.refresh : undefined}
         />
       </div>
       {linkGroups.map((group, index) => (

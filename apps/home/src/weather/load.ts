@@ -4,7 +4,12 @@ import { coordKey, isFresh, readCached, writeCached, type WeatherEntry } from '.
 
 export type Coords = { latitude: number; longitude: number }
 
-export type LoadDeps = { storage?: StorageLike; fetchImpl?: typeof fetch; now: number }
+export type LoadDeps = {
+  storage?: StorageLike
+  fetchImpl?: typeof fetch
+  now: number
+  force?: boolean
+}
 
 export type LoadResult = { entry: WeatherEntry; stale: boolean }
 
@@ -15,9 +20,9 @@ async function load(
   { latitude, longitude }: Coords,
   deps: LoadDeps,
 ): Promise<LoadResult> {
-  const { storage, fetchImpl, now } = deps
+  const { storage, fetchImpl, now, force = false } = deps
   const cached = readCached(storage, key)
-  if (cached && isFresh(cached, now)) return { entry: cached, stale: false }
+  if (cached && !force && isFresh(cached, now)) return { entry: cached, stale: false }
   try {
     const entry = { data: await fetchForecast(latitude, longitude, fetchImpl), fetchedAt: now }
     writeCached(storage, key, entry)

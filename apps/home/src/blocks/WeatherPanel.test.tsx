@@ -24,16 +24,30 @@ describe('WeatherPanel', () => {
         fetchedAt: new Date(2026, 10, 15, 14, 5).getTime(),
       },
     })
-    for (const text of [
-      'WEATHER',
-      'TAIPEI',
-      '24°C',
-      'CLEAR',
-      'HI 26°',
-      'RAIN 10%',
-      'UPDATED 14:05',
-    ]) {
+    for (const text of ['WEATHER', 'TAIPEI', '24°C', 'CLEAR', 'HI 26°', 'RAIN 10%']) {
       expect(html).toContain(text)
     }
+    expect(html).toMatch(/UPDATED <time[^>]*>14:05<\/time>/)
+  })
+})
+
+describe('refreshing from the update time', () => {
+  const ready = {
+    status: 'ready' as const,
+    entry: {
+      data: createMockWeather(new Date(2026, 10, 15)),
+      fetchedAt: new Date(2026, 10, 15, 14, 5).getTime(),
+    },
+  }
+  it('marks the update time as a double-click refresh when it can refresh', () => {
+    const html = renderToStaticMarkup(
+      <WeatherPanel title="WEATHER" place="TAIPEI" state={ready} onRefresh={() => {}} />,
+    )
+    expect(html).toMatch(
+      /<time(?=[^>]*title="雙擊重新取得天氣")(?=[^>]*ac:select-none)(?=[^>]*dateTime="2026-11-15T)[^>]*>14:05<\/time>/i,
+    )
+  })
+  it('shows a plain time without a refresh handler', () => {
+    expect(render(ready)).not.toContain('雙擊重新取得天氣')
   })
 })

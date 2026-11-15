@@ -3,7 +3,12 @@ import { describeWeather } from '../weather/codes'
 import type { WeatherData } from '../weather/types'
 import type { WeatherState } from '../weather/useWeather'
 
-export type WeatherPanelProps = { title: string; place: string; state: WeatherState }
+export type WeatherPanelProps = {
+  title: string
+  place: string
+  state: WeatherState
+  onRefresh?: () => void
+}
 
 const messages = {
   loading: 'LOADING',
@@ -18,7 +23,7 @@ function updatedAt(fetchedAt: number): string {
   return `${pad(date.getHours())}:${pad(date.getMinutes())}`
 }
 
-export function WeatherPanel({ title, place, state }: WeatherPanelProps) {
+export function WeatherPanel({ title, place, state, onRefresh }: WeatherPanelProps) {
   return (
     <AcPanel
       title={
@@ -29,7 +34,11 @@ export function WeatherPanel({ title, place, state }: WeatherPanelProps) {
       pellets={['tr', 'bl']}
     >
       {state.entry ? (
-        <WeatherBody data={state.entry.data} fetchedAt={state.entry.fetchedAt} />
+        <WeatherBody
+          data={state.entry.data}
+          fetchedAt={state.entry.fetchedAt}
+          onRefresh={onRefresh}
+        />
       ) : (
         <p className="ac:m-0 ac:text-muted">
           {messages[state.status === 'ready' ? 'loading' : state.status]}
@@ -39,7 +48,15 @@ export function WeatherPanel({ title, place, state }: WeatherPanelProps) {
   )
 }
 
-function WeatherBody({ data, fetchedAt }: { data: WeatherData; fetchedAt: number }) {
+function WeatherBody({
+  data,
+  fetchedAt,
+  onRefresh,
+}: {
+  data: WeatherData
+  fetchedAt: number
+  onRefresh?: () => void
+}) {
   const { current, daily } = data
   const now = describeWeather(current.weather_code)
   return (
@@ -62,7 +79,17 @@ function WeatherBody({ data, fetchedAt }: { data: WeatherData; fetchedAt: number
         <span className="ac:text-warning">HI {Math.round(daily.temperature_2m_max[0] ?? 0)}°</span>
         <span className="ac:text-info">LO {Math.round(daily.temperature_2m_min[0] ?? 0)}°</span>
         <span>RAIN {daily.precipitation_probability_max[0] ?? 0}%</span>
-        <span>UPDATED {updatedAt(fetchedAt)}</span>
+        <span>
+          UPDATED{' '}
+          <time
+            dateTime={new Date(fetchedAt).toISOString()}
+            title={onRefresh ? '雙擊重新取得天氣' : undefined}
+            onDoubleClick={onRefresh}
+            className={onRefresh ? 'ac:cursor-pointer ac:select-none' : undefined}
+          >
+            {updatedAt(fetchedAt)}
+          </time>
+        </span>
       </div>
     </>
   )

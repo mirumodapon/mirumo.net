@@ -7,14 +7,17 @@ export type WeatherStatus = 'loading' | 'ready' | 'unavailable' | 'no-location'
 
 export type WeatherState = { status: WeatherStatus; entry?: WeatherEntry }
 
+type Request = { attempt: number; force: boolean }
+
 type Result = { key: string; status: 'ready' | 'unavailable'; entry?: WeatherEntry }
 
-export function useWeather(coords: Coords | undefined): WeatherState {
+export function useWeather(coords: Coords | undefined): WeatherState & { refresh: () => void } {
   const latitude = coords?.latitude
   const longitude = coords?.longitude
   const key = coords ? coordKey(coords.latitude, coords.longitude) : undefined
   const [result, setResult] = useState<Result>()
-  const [attempt, setAttempt] = useState(0)
+  const [request, setRequest] = useState<Request>({ attempt: 0, force: false })
+  const refresh = () => setRequest((value) => ({ attempt: value.attempt + 1, force: true }))
 
   useEffect(() => {
     if (latitude === undefined || longitude === undefined) return
@@ -22,9 +25,15 @@ export function useWeather(coords: Coords | undefined): WeatherState {
     let cancelled = false
     let timer: ReturnType<typeof setTimeout> | undefined
     const retryIn = (delay: number) => {
-      timer = setTimeout(() => setAttempt((value) => value + 1), Math.max(0, delay))
+      timer = setTimeout(
+        () => setRequest((value) => ({ attempt: value.attempt + 1, force: false })),
+        Math.max(0, delay),
+      )
     }
-    loadWeather({ latitude, longitude }, { storage: browserStorage(), now: Date.now() })
+    loadWeather(
+      { latitude, longitude },
+      { storage: browserStorage(), now: Date.now(), force: request.force },
+    )
       .then(({ entry, stale }) => {
         if (cancelled) return
         setResult({ key, status: 'ready', entry })
@@ -39,9 +48,11 @@ export function useWeather(coords: Coords | undefined): WeatherState {
       cancelled = true
       clearTimeout(timer)
     }
-  }, [latitude, longitude, attempt])
+  }, [latitude, longitude, request])
 
-  if (!key) return { status: 'no-location' }
-  if (result?.key !== key) return { status: 'loading' }
-  return result.entry ? { status: result.status, entry: result.entry } : { status: result.status }
+  if (!key) return { status: 'no-location', refresh }
+  if (result?.key !== key) return { status: 'loading', refresh }
+  return result.entry
+    ? { status: result.status, entry: result.entry, refresh }
+    : { status: result.status, refresh }
 }

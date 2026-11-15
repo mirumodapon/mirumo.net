@@ -101,6 +101,13 @@ describe('loadWeather', () => {
     await loadWeather(taipei, { fetchImpl, now: 2 })
     expect(fetchImpl).toHaveBeenCalledTimes(2)
   })
+  it('refetches a fresh entry when forced', async () => {
+    const storage = seeded({ data: oldData, fetchedAt: 1_000 })
+    const fetchImpl = okFetch()
+    const result = await loadWeather(taipei, { storage, fetchImpl, now: 2_000, force: true })
+    expect(fetchImpl).toHaveBeenCalledTimes(1)
+    expect(result).toEqual({ entry: { data: newData, fetchedAt: 2_000 }, stale: false })
+  })
   it('works without storage', async () => {
     const result = await loadWeather(taipei, { fetchImpl: okFetch(), now: 5 })
     expect(result.entry.fetchedAt).toBe(5)
