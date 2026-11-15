@@ -38,6 +38,7 @@ export function SettingsDialog({
     <AcDialog
       open={open}
       title="SETTINGS"
+      closeOnBackdrop
       onClose={onCancel}
       actions={
         <>

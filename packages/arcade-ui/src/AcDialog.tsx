@@ -7,12 +7,14 @@ import {
   type ComponentProps,
   type ReactNode,
 } from 'react'
+import { isOutsideRect } from './backdrop'
 import { mazeFrame, mazeHeading } from './maze'
 
 export type AcDialogProps = Omit<ComponentProps<'dialog'>, 'open' | 'title'> & {
   open: boolean
   title?: ReactNode
   actions?: ReactNode
+  closeOnBackdrop?: boolean
 }
 
 const dialog = clsx(
@@ -29,9 +31,11 @@ export function AcDialog({
   open,
   title,
   actions,
+  closeOnBackdrop = false,
   className,
   children,
   ref,
+  onClick,
   ...props
 }: AcDialogProps) {
   const dialogRef = useRef<HTMLDialogElement>(null)
@@ -52,6 +56,12 @@ export function AcDialog({
       ref={dialogRef}
       aria-labelledby={labelled ? titleId : undefined}
       className={clsx(dialog, className)}
+      onClick={(event) => {
+        onClick?.(event)
+        const node = dialogRef.current
+        if (!closeOnBackdrop || !node || event.target !== node) return
+        if (isOutsideRect(node.getBoundingClientRect(), event.clientX, event.clientY)) node.close()
+      }}
       {...props}
     >
       {title != null && (

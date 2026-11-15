@@ -2,9 +2,9 @@ import { AcButton, AcDialog, AcInput, type AcDialogProps } from '@mirumo/arcade-
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 
-type Args = Pick<AcDialogProps, 'title'>
+type Args = Pick<AcDialogProps, 'title' | 'closeOnBackdrop'>
 
-function Demo({ title, long = false }: Args & { long?: boolean }) {
+function Demo({ title, closeOnBackdrop, long = false }: Args & { long?: boolean }) {
   const [open, setOpen] = useState(false)
   const close = () => setOpen(false)
   return (
@@ -16,6 +16,7 @@ function Demo({ title, long = false }: Args & { long?: boolean }) {
         open={open}
         onClose={close}
         title={title}
+        closeOnBackdrop={closeOnBackdrop}
         aria-label={title == null ? 'SETTINGS' : undefined}
         actions={
           <>
@@ -60,3 +61,5 @@ export const Title: Story = {}
 export const NoTitle: Story = { args: { title: undefined } }
 
 export const Scroll: Story = { render: (args) => <Demo {...args} long /> }
+
+export const CloseOnBackdrop: Story = { args: { closeOnBackdrop: true } }
