@@ -5,6 +5,7 @@ import { ClockLayout } from './layouts/ClockLayout'
 import { TimeOnlyLayout } from './layouts/TimeOnlyLayout'
 
 const layouts: Record<HomeLayout, ComponentType<{ config: HomeConfig; stage: number }>> = {
+  default: TimeOnlyLayout,
   clock: ClockLayout,
   'time-only': TimeOnlyLayout,
 }

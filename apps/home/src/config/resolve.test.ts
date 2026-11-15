@@ -27,13 +27,29 @@ describe('resolveConfig', () => {
 })
 
 describe('defaultConfig', () => {
-  it('starts with the time-only layout, MIRUMO title and a 1UP greeting', () => {
+  it('starts with the default layout and the prototype content', () => {
     expect(defaultConfig).toMatchObject({
       title: 'MIRUMO',
       player: { label: '1UP', text: 'HELLO' },
-      layout: 'time-only',
+      layout: 'default',
       stage: { label: 'STAGE' },
+      weather: { title: 'WEATHER', place: 'TAIPEI' },
     })
+    expect(defaultConfig.links.title).toBe('LINKS')
+    expect(defaultConfig.links.items).toHaveLength(6)
+    expect(defaultConfig.links.items[0]).toEqual({ name: 'Gmail', url: 'https://mail.google.com/' })
+    expect(defaultConfig.socials).toHaveLength(4)
+    expect(defaultConfig.socials[0]).toEqual({
+      name: 'GitHub',
+      url: 'https://github.com/',
+      icon: 'brand-github',
+    })
+  })
+  it('replaces the link list instead of merging it', () => {
+    const items = [{ name: 'A', url: 'https://a.test/' }]
+    const config = resolveConfig({ links: { items } })
+    expect(config.links.items).toEqual(items)
+    expect(config.links.title).toBe('LINKS')
   })
 })
 

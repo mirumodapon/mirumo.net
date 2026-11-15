@@ -1,6 +1,10 @@
 import type { AcPanelCorner } from '@mirumo/arcade-ui'
 
-export type HomeLayout = 'time-only' | 'clock'
+export type HomeLayout = 'default' | 'time-only' | 'clock'
+
+export type HomeLink = { name: string; url: string }
+
+export type HomeSocial = { name: string; url: string; icon?: string }
 
 export type HomeConfig = {
   title: string
@@ -14,13 +18,16 @@ export type HomeConfig = {
     seconds: boolean
     date: boolean
   }
+  weather: { title: string; place: string }
+  links: { title: string; items: HomeLink[] }
+  socials: HomeSocial[]
 }
 
 export const defaultConfig: HomeConfig = {
   title: 'MIRUMO',
   player: { label: '1UP', text: 'HELLO' },
   stage: { label: 'STAGE' },
-  layout: 'time-only',
+  layout: 'default',
   screen: { scanlines: true },
   clock: {
     title: 'TIME',
@@ -28,4 +35,22 @@ export const defaultConfig: HomeConfig = {
     seconds: true,
     date: true,
   },
+  weather: { title: 'WEATHER', place: 'TAIPEI' },
+  links: {
+    title: 'LINKS',
+    items: [
+      { name: 'Gmail', url: 'https://mail.google.com/' },
+      { name: 'Calendar', url: 'https://calendar.google.com/' },
+      { name: 'GitHub', url: 'https://github.com/' },
+      { name: 'Drive', url: 'https://drive.google.com/' },
+      { name: 'Notion', url: 'https://www.notion.so/' },
+      { name: 'Claude', url: 'https://claude.ai/' },
+    ],
+  },
+  socials: [
+    { name: 'GitHub', url: 'https://github.com/', icon: 'brand-github' },
+    { name: 'X', url: 'https://x.com/', icon: 'brand-x' },
+    { name: 'Instagram', url: 'https://www.instagram.com/', icon: 'brand-instagram' },
+    { name: 'LinkedIn', url: 'https://www.linkedin.com/', icon: 'brand-linkedin' },
+  ],
 }
