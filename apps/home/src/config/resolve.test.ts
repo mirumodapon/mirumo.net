@@ -80,6 +80,7 @@ describe('defaults', () => {
     expect(defaultWorkspace.socials).toEqual([
       { name: 'GitHub', url: 'https://github.com/mirumodapon', icon: 'brand-github' },
       { name: 'Instagram', url: 'https://www.instagram.com/mirumo_0915', icon: 'brand-instagram' },
+      { name: 'X', url: 'https://x.com/mirudapon', icon: 'brand-x' },
     ])
   })
 })
