@@ -141,7 +141,7 @@ import '@mirumo/arcade-ui/index.css'
 - **文件頁**：`*.mdx`，放在 `docs/`。
 - **Story**：`*.stories.ts(x)`，展示元件的各種狀態。
 
-樣式由 `.storybook/preview.ts` 引用 `@mirumo/arcade-ui/index.css`。Storybook 的 Introduction 頁面直接顯示這份 README。
+樣式由 `.storybook/preview.ts` 引用 `@mirumo/arcade-ui/index.css`。Storybook 的 Introduction 頁面（`docs/Introduction.mdx`）介紹元件庫本身：元件一覽、顏色、字型與 story 的寫法。
 
 ## 部署
 

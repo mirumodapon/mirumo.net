@@ -1,6 +1,103 @@
-import { Markdown, Meta } from '@storybook/addon-docs/blocks'
-import readme from '../../../../README.md?raw'
+import { ColorItem, ColorPalette, Meta, Typeset } from '@storybook/addon-docs/blocks'
 
 <Meta title="Introduction" />
 
-<Markdown>{readme}</Markdown>
+# Arcade UI
+
+`@mirumo/arcade-ui` 是 mirumo.net 首頁使用的街機風格 React 元件庫：深色底、霓虹藍的迷宮牆、豆子（pellet）點綴，以及像素字型。這個 Storybook 展示每個元件的樣子與可調整的 props。
+
+## 怎麼看
+
+- **左側欄 `Arcade/`**：每個元件一組 story。第一個 story 是預設狀態，之後每個 story 展示一個 prop 的所有變化。
+- **Controls**：下方面板可以即時調整 props。正在展示的那個 prop 會關掉 control，避免和畫面衝突。
+- **背景**：story 都放在深色的 `surface` 底上，跟首頁的實際背景相同。
+- **互動**：hover、鍵盤 focus、觸控都可以直接在畫布上試，例如 `AcTooltip`、`AcTabs` 的拖曳捲動。
+
+## 元件
+
+- **版面**
+  - `AcScreen`：整頁背景，可加 CRT 掃描線。
+  - `AcMarquee`：頁首標題列，兩側顯示 1UP / STAGE 分數欄。
+  - `AcPanel`：迷宮牆外框的卡片，可在角落放豆子。
+- **連結**
+  - `AcLinkTile`：帶顏色徽章的連結磚。
+  - `AcChip`：圓角的小連結，可加前置 icon。
+- **操作**
+  - `AcButton`：按鈕，有多種 variant 與尺寸。
+  - `AcTabs`：單列分頁，可用滾輪、拖曳或方向鍵切換。
+  - `AcTooltip`：hover、focus 或觸控點一下時顯示的說明泡泡。
+  - `AcDialog`：對話框，標題與按鈕列固定，內容可捲動。
+- **表單**
+  - `AcField`、`AcFieldset`：欄位標籤與欄位群組。
+  - `AcInput`、`AcSelect`、`AcCheckbox`：輸入框、下拉選單、勾選框。
+- **其他**
+  - `AcIcon`：Tabler icon。
+  - `AcPelletBar`：用一排豆子表示的進度條。
+
+另外也匯出幾個工具：`useDoubleTap` / `isDoubleTap`（滑鼠雙擊與觸控連點兩下）、`tooltipReducer`、`fitShift`（讓浮層留在畫面內）。
+
+## 使用
+
+```ts
+import { AcButton, AcPanel } from '@mirumo/arcade-ui'
+import '@mirumo/arcade-ui/index.css'
+```
+
+`index.css` 包含整套 Tailwind 設定、design token、Tabler icon 與字型，使用端不用另外載入。
+
+## 慣例
+
+- **前綴**：元件都以 `Ac` 開頭。Tailwind 使用 `prefix(ac)`，class 寫成 `ac:bg-wall`，CSS 變數是 `--ac-color-*`。
+- **Icon**：props 直接傳 [Tabler Icons](https://tabler.io/icons) 的名稱，例如 `prefix="settings"`，畫成 `ti ti-settings`。目前只支援線條版本。
+- **無障礙**：只有 icon 的按鈕或連結要給 `aria-label`。
+
+## 顏色
+
+<ColorPalette>
+  <ColorItem
+    title="基底"
+    subtitle="surface · field · ink · muted"
+    colors={{ surface: '#05050f', field: '#0c0c22', ink: '#f2f2ff', muted: '#8a8fc7' }}
+  />
+  <ColorItem
+    title="迷宮"
+    subtitle="wall · pellet · brick"
+    colors={{ wall: '#2d3cff', pellet: '#ffd9b3', brick: '#a3401b' }}
+  />
+  <ColorItem
+    title="強調"
+    subtitle="primary · secondary · info · warning · danger"
+    colors={{
+      primary: '#ffd23f',
+      secondary: '#ff7ad9',
+      info: '#38e8ff',
+      warning: '#ffa040',
+      danger: '#ff4b4b',
+    }}
+  />
+</ColorPalette>
+
+## 字型
+
+**Pixel**：Press Start 2P，用在標題、分數與按鈕。中文字會退回 Noto Sans TC。
+
+<Typeset
+  fontFamily="var(--ac-font-pixel)"
+  fontSizes={[10, 12, 16, 24]}
+  sampleText="MIRUMO 1UP STAGE 0x01"
+/>
+
+**Body**：Noto Sans TC，用在內文與表單。
+
+<Typeset
+  fontFamily="var(--ac-font-body)"
+  fontSizes={[12, 14, 16]}
+  sampleText="街機風格的個人首頁 Arcade UI"
+/>
+
+## 新增 story
+
+- **位置**：`apps/storybook/src/arcade/<元件>.stories.tsx`，title 用 `Arcade/<元件>`。
+- **內容**：一個 `Default`，加上每個 prop 一個 story，並關掉該 prop 的 control。
+- **背景**：用 decorator 包一層 `background: var(--ac-color-surface)`。
+- **文件頁**：`*.mdx` 放在 `apps/storybook/src/docs/`。
