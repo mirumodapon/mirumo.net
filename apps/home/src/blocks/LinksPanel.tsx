@@ -1,4 +1,4 @@
-import { AcLinkTile, AcPanel, acLinkTileColors } from '@mirumo/arcade-ui'
+import { AcIcon, AcLinkTile, AcPanel, acLinkTileColors } from '@mirumo/arcade-ui'
 import type { HomeLink } from '../config'
 
 export type LinksPanelProps = { title: string; items: HomeLink[] }
@@ -13,6 +13,7 @@ export function LinksPanel({ title, items }: LinksPanelProps) {
             key={`${item.name}-${item.url}`}
             href={item.url}
             color={acLinkTileColors[i % acLinkTileColors.length]}
+            badge={item.icon ? <AcIcon name={item.icon} className="ac:text-[18px]" /> : undefined}
           >
             {item.name}
           </AcLinkTile>

@@ -2,7 +2,7 @@ import type { AcPanelCorner } from '@mirumo/arcade-ui'
 
 export type HomeLayout = 'default' | 'time-only' | 'clock'
 
-export type HomeLink = { name: string; url: string }
+export type HomeLink = { name: string; url: string; icon?: string }
 
 export type HomeSocial = { name: string; url: string; icon?: string }
 
@@ -39,12 +39,12 @@ export const defaultConfig: HomeConfig = {
   links: {
     title: 'LINKS',
     items: [
-      { name: 'Gmail', url: 'https://mail.google.com/' },
-      { name: 'Calendar', url: 'https://calendar.google.com/' },
-      { name: 'GitHub', url: 'https://github.com/' },
-      { name: 'Drive', url: 'https://drive.google.com/' },
-      { name: 'Notion', url: 'https://www.notion.so/' },
-      { name: 'Claude', url: 'https://claude.ai/' },
+      { name: 'Gmail', url: 'https://mail.google.com/', icon: 'brand-gmail' },
+      { name: 'Calendar', url: 'https://calendar.google.com/', icon: 'calendar' },
+      { name: 'GitHub', url: 'https://github.com/', icon: 'brand-github' },
+      { name: 'Drive', url: 'https://drive.google.com/', icon: 'brand-google-drive' },
+      { name: 'Notion', url: 'https://www.notion.so/', icon: 'brand-notion' },
+      { name: 'Claude', url: 'https://claude.ai/', icon: 'sparkles' },
     ],
   },
   socials: [

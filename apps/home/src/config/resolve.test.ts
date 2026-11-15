@@ -37,7 +37,19 @@ describe('defaultConfig', () => {
     })
     expect(defaultConfig.links.title).toBe('LINKS')
     expect(defaultConfig.links.items).toHaveLength(6)
-    expect(defaultConfig.links.items[0]).toEqual({ name: 'Gmail', url: 'https://mail.google.com/' })
+    expect(defaultConfig.links.items.map((item) => item.icon)).toEqual([
+      'brand-gmail',
+      'calendar',
+      'brand-github',
+      'brand-google-drive',
+      'brand-notion',
+      'sparkles',
+    ])
+    expect(defaultConfig.links.items[0]).toEqual({
+      name: 'Gmail',
+      url: 'https://mail.google.com/',
+      icon: 'brand-gmail',
+    })
     expect(defaultConfig.socials).toHaveLength(4)
     expect(defaultConfig.socials[0]).toEqual({
       name: 'GitHub',

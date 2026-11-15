@@ -107,6 +107,19 @@ describe('default layout', () => {
     expect(html).toMatch(/ac:min-h-\[calc\(100dvh_-_3\.5rem\)\][^"]*ac:flex-col/)
     expect(html).toMatch(/<footer[^>]*ac:mt-auto/)
   })
+  it('shows each link icon in its badge', () => {
+    expect(render({})).toContain('ti-brand-gmail')
+  })
+  it('falls back to the first letter for a link without an icon', () => {
+    const html = render({ links: { items: [{ name: 'Wiki', url: 'https://wiki.example/' }] } })
+    expect(html).toMatch(/aria-hidden="true">W</)
+  })
+  it('treats an empty icon as no icon', () => {
+    const html = render({
+      links: { items: [{ name: 'Wiki', url: 'https://wiki.example/', icon: '' }] },
+    })
+    expect(html).toMatch(/aria-hidden="true">W</)
+  })
   it('hides the links panel when there are no links', () => {
     expect(render({ links: { items: [] } })).not.toContain('LINKS')
   })
