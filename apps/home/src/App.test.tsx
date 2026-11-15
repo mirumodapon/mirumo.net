@@ -202,3 +202,30 @@ describe('switching workspaces from the STAGE block', () => {
     expect(renderWith('default')).not.toContain('雙擊切換 workspace')
   })
 })
+
+describe('title bar visibility', () => {
+  const reveal = 'data-marquee-reveal'
+  it('shows the title bar inline by default in the default and time-only layouts', () => {
+    for (const layout of ['default', 'time-only'] as const) {
+      const html = render({ layout })
+      expect(html).toContain('<header')
+      expect(html).not.toContain(reveal)
+    }
+  })
+  it('hides the title bar and offers the top hover reveal when turned off', () => {
+    for (const layout of ['default', 'time-only'] as const) {
+      const html = render({ layout }, { marquee: { visible: false } })
+      expect(html).not.toContain('<header')
+      expect(html).toContain(reveal)
+    }
+  })
+  it('centers the time-only card on the whole screen without the title bar', () => {
+    const html = render({ layout: 'time-only' }, { marquee: { visible: false } })
+    expect(html).not.toMatch(/ac:grid-rows-\[auto_1fr\]/)
+  })
+  it('offers the top hover reveal in the clock layout even when the title bar is on', () => {
+    const html = render({ layout: 'clock' })
+    expect(html).not.toContain('<header')
+    expect(html).toContain(reveal)
+  })
+})

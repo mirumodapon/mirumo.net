@@ -62,6 +62,7 @@ describe('defaults', () => {
       player: { label: '1UP', text: '' },
       stage: { label: 'STAGE' },
       screen: { scanlines: true },
+      marquee: { visible: true },
     })
   })
   it('starts each workspace with the default layout and the prototype content', () => {

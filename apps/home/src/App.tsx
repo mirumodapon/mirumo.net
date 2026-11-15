@@ -4,7 +4,10 @@ import type { HomeLayout } from './config'
 import { ClockLayout } from './layouts/ClockLayout'
 import { DefaultLayout } from './layouts/DefaultLayout'
 import type { LayoutProps } from './layouts/LayoutProps'
+import { MarqueeReveal } from './layouts/MarqueeReveal'
 import { TimeOnlyLayout } from './layouts/TimeOnlyLayout'
+
+const inlineMarquee = new Set<HomeLayout>(['default', 'time-only'])
 
 const layouts: Record<HomeLayout, ComponentType<LayoutProps>> = {
   default: DefaultLayout,
@@ -15,8 +18,10 @@ const layouts: Record<HomeLayout, ComponentType<LayoutProps>> = {
 export function App(props: LayoutProps) {
   const { global, workspace } = props
   const Layout = layouts[workspace.layout]
+  const marqueeOnPage = global.marquee.visible && inlineMarquee.has(workspace.layout)
   return (
     <AcScreen scanlines={global.screen.scanlines}>
+      {!marqueeOnPage && <MarqueeReveal {...props} />}
       <Layout {...props} />
     </AcScreen>
   )

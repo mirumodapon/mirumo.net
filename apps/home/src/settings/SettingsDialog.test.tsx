@@ -59,6 +59,7 @@ describe('SettingsDialog', () => {
       'value="MIRUMO"',
       'value="1UP"',
       'placeholder="留空依時間顯示"',
+      '顯示標題列',
       'value="STAGE"',
       '＋ 新增 workspace',
       '重設為設定檔',

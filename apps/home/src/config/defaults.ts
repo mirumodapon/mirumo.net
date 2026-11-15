@@ -13,6 +13,7 @@ export type GlobalConfig = {
   player: { label: string; text: string }
   stage: { label: string }
   screen: { scanlines: boolean }
+  marquee: { visible: boolean }
 }
 
 export type WorkspaceConfig = {
@@ -35,6 +36,7 @@ export const defaultGlobal: GlobalConfig = {
   player: { label: '1UP', text: '' },
   stage: { label: 'STAGE' },
   screen: { scanlines: true },
+  marquee: { visible: true },
 }
 
 export const defaultWorkspace: WorkspaceConfig = {

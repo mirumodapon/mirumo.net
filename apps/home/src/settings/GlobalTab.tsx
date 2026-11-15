@@ -41,12 +41,18 @@ export function GlobalTab({ settings, onChange, onReset }: GlobalTabProps) {
         </AcField>
       </AcFieldset>
 
-      <AcFieldset legend="畫面">
+      <AcFieldset legend="畫面" className="ac:flex ac:flex-wrap ac:gap-6">
         <AcCheckbox
           checked={global.screen.scanlines}
           onChange={(event) => set({ screen: { scanlines: event.target.checked } })}
         >
           掃描線
+        </AcCheckbox>
+        <AcCheckbox
+          checked={global.marquee.visible}
+          onChange={(event) => set({ marquee: { visible: event.target.checked } })}
+        >
+          顯示標題列
         </AcCheckbox>
       </AcFieldset>
 
