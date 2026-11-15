@@ -1,4 +1,4 @@
-import { AcIcon, AcPanel, useDoubleTap } from '@mirumo/arcade-ui'
+import { AcIcon, AcPanel, AcTooltip, useDoubleTap } from '@mirumo/arcade-ui'
 import { describeWeather } from '../weather/codes'
 import type { WeatherData } from '../weather/types'
 import type { WeatherState } from '../weather/useWeather'
@@ -18,6 +18,45 @@ const messages = {
 
 const pad = (n: number) => String(n).padStart(2, '0')
 
+const link = 'ac:text-info ac:underline ac:underline-offset-2 ac:hover:text-primary'
+
+const credits = (
+  <span className="ac:grid ac:gap-1">
+    <span>
+      天氣資料：
+      <a className={link} href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">
+        Open-Meteo
+      </a>
+      （CC BY 4.0）
+    </span>
+    <span>
+      地名資料：
+      <a
+        className={link}
+        href="https://www.openstreetmap.org/copyright"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        © OpenStreetMap contributors
+      </a>
+    </span>
+  </span>
+)
+
+function SourcesInfo() {
+  return (
+    <AcTooltip align="end" content={credits}>
+      <button
+        type="button"
+        aria-label="資料來源"
+        className="ac:inline-flex ac:cursor-pointer ac:text-muted ac:hover:text-info ac:focus-visible:outline-2 ac:focus-visible:outline-offset-2 ac:focus-visible:outline-info"
+      >
+        <AcIcon name="info-circle" className="ac:text-[12px]" />
+      </button>
+    </AcTooltip>
+  )
+}
+
 function updatedAt(fetchedAt: number): string {
   const date = new Date(fetchedAt)
   return `${pad(date.getHours())}:${pad(date.getMinutes())}`
@@ -29,6 +68,7 @@ export function WeatherPanel({ title, place, state, onRefresh }: WeatherPanelPro
       title={
         <>
           {title} <span className="ac:text-[12px] ac:text-secondary">{place}</span>
+          <SourcesInfo />
         </>
       }
       pellets={['tr', 'bl']}

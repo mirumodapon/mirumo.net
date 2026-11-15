@@ -24,3 +24,9 @@ export function tooltipReducer(state: TooltipState, event: TooltipEvent): Toolti
       return { open: false, pinned: false }
   }
 }
+
+export function fitShift(left: number, right: number, viewportWidth: number, margin = 8): number {
+  if (left < margin) return margin - left
+  if (right > viewportWidth - margin) return viewportWidth - margin - right
+  return 0
+}

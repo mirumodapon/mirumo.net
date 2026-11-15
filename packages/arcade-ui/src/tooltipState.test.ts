@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { tooltipReducer, type TooltipEvent, type TooltipState } from './tooltipState'
+import { fitShift, tooltipReducer, type TooltipEvent, type TooltipState } from './tooltipState'
 
 const closed: TooltipState = { open: false, pinned: false }
 const run = (...events: TooltipEvent[]) => events.reduce(tooltipReducer, closed)
@@ -24,5 +24,14 @@ describe('tooltipReducer', () => {
   it('closes on Escape or an outside press, even when pinned', () => {
     expect(run('focus', 'escape')).toEqual(closed)
     expect(run('tap', 'outside')).toEqual(closed)
+  })
+})
+
+describe('fitShift', () => {
+  it('leaves a bubble that fits alone', () => expect(fitShift(20, 300, 390)).toBe(0))
+  it('pushes a bubble past the left edge back in', () => expect(fitShift(-25, 235, 390)).toBe(33))
+  it('pulls a bubble past the right edge back in', () => expect(fitShift(200, 420, 390)).toBe(-38))
+  it('favours the left edge when the bubble is wider than the screen', () => {
+    expect(fitShift(-50, 500, 390)).toBe(58)
   })
 })

@@ -3,6 +3,7 @@ import {
   cloneElement,
   useEffect,
   useId,
+  useLayoutEffect,
   useReducer,
   useRef,
   type FocusEvent,
@@ -12,7 +13,7 @@ import {
   type ReactElement,
   type ReactNode,
 } from 'react'
-import { tooltipReducer } from './tooltipState'
+import { fitShift, tooltipReducer } from './tooltipState'
 
 type TriggerProps = HTMLAttributes<HTMLElement>
 
@@ -35,6 +36,16 @@ export function AcTooltip({ content, children, align = 'start' }: AcTooltipProps
   const [state, send] = useReducer(tooltipReducer, { open: false, pinned: false })
   const wrapper = useRef<HTMLSpanElement>(null)
   const leaveTimer = useRef<ReturnType<typeof setTimeout>>(undefined)
+  const bubbleRef = useRef<HTMLSpanElement>(null)
+
+  useLayoutEffect(() => {
+    const node = bubbleRef.current
+    if (!node || !state.open) return
+    node.style.translate = ''
+    const { left, right } = node.getBoundingClientRect()
+    const shift = fitShift(left, right, document.documentElement.clientWidth)
+    if (shift) node.style.translate = `${shift}px 0`
+  }, [state.open])
 
   useEffect(() => () => clearTimeout(leaveTimer.current), [])
 
@@ -86,6 +97,7 @@ export function AcTooltip({ content, children, align = 'start' }: AcTooltipProps
     >
       {cloneElement(children, triggerProps)}
       <span
+        ref={bubbleRef}
         role="tooltip"
         id={id}
         hidden={!state.open}

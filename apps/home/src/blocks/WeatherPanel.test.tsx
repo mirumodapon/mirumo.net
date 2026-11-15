@@ -57,3 +57,35 @@ describe('refreshing from the update time', () => {
     expect(render(ready)).not.toContain('雙擊重新取得天氣')
   })
 })
+
+describe('data source credits', () => {
+  const states = [
+    { status: 'loading' as const },
+    { status: 'unavailable' as const },
+    { status: 'no-location' as const },
+    {
+      status: 'ready' as const,
+      entry: { data: createMockWeather(new Date(2026, 10, 15)), fetchedAt: Date.now() },
+    },
+  ]
+  it('offers an info button with the weather and place-name credits in every state', () => {
+    for (const state of states) {
+      const html = render(state)
+      expect(html).toContain('aria-label="資料來源"')
+      expect(html).toContain('ti-info-circle')
+      expect(html).toContain('天氣資料：')
+      expect(html).toContain('href="https://open-meteo.com/"')
+      expect(html).toContain('© OpenStreetMap contributors')
+      expect(html).toContain('href="https://www.openstreetmap.org/copyright"')
+    }
+  })
+  it('links the info button to its tooltip', () => {
+    const html = render({ status: 'loading' })
+    const describedBy = html.match(
+      /aria-label="資料來源"[^>]*aria-describedby="([^"]+)"|aria-describedby="([^"]+)"[^>]*aria-label="資料來源"/,
+    )
+    const id = describedBy?.[1] ?? describedBy?.[2]
+    expect(id).toBeTruthy()
+    expect(html).toContain(`role="tooltip" id="${id}"`)
+  })
+})
