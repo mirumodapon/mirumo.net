@@ -1,9 +1,9 @@
-import overrides from '../../home.config'
-import { resolveConfig } from './resolve'
+import file from '../../home.config'
+import { resolveWorkspaces } from './resolve'
 
 export type { HomeConfig, HomeLayout } from './defaults'
 export { defaultConfig } from './defaults'
-export type { DeepPartial, HomeConfigOverrides } from './resolve'
-export { resolveConfig } from './resolve'
+export type { DeepPartial, HomeConfigFile, HomeConfigOverrides } from './resolve'
+export { resolveConfig, resolveWorkspaces } from './resolve'
 
-export const config = resolveConfig(overrides)
+export const workspaces = resolveWorkspaces(file)

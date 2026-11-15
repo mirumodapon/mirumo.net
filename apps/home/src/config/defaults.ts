@@ -5,6 +5,7 @@ export type HomeLayout = 'time-only' | 'clock'
 export type HomeConfig = {
   title: string
   player: { label: string; text: string }
+  stage: { label: string }
   layout: HomeLayout
   screen: { scanlines: boolean }
   clock: {
@@ -18,6 +19,7 @@ export type HomeConfig = {
 export const defaultConfig: HomeConfig = {
   title: 'MIRUMO',
   player: { label: '1UP', text: 'HELLO' },
+  stage: { label: 'STAGE' },
   layout: 'time-only',
   screen: { scanlines: true },
   clock: {

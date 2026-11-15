@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { defaultConfig } from './defaults'
-import { resolveConfig } from './resolve'
+import { resolveConfig, resolveWorkspaces } from './resolve'
 
 describe('resolveConfig', () => {
   it('returns the defaults when nothing is overridden', () => {
@@ -32,6 +32,24 @@ describe('defaultConfig', () => {
       title: 'MIRUMO',
       player: { label: '1UP', text: 'HELLO' },
       layout: 'time-only',
+      stage: { label: 'STAGE' },
     })
+  })
+})
+
+describe('resolveWorkspaces', () => {
+  it('gives one default workspace when none are listed', () => {
+    expect(resolveWorkspaces({})).toEqual([defaultConfig])
+    expect(resolveWorkspaces({ workspaces: [] })).toEqual([defaultConfig])
+  })
+  it('resolves each workspace over the defaults on its own', () => {
+    const [a, b] = resolveWorkspaces({
+      workspaces: [{ player: { text: 'WORK' }, clock: { pellets: ['tr'] } }, { layout: 'clock' }],
+    })
+    expect(a!.player.text).toBe('WORK')
+    expect(a!.layout).toBe(defaultConfig.layout)
+    expect(b!.player.text).toBe(defaultConfig.player.text)
+    expect(b!.clock.pellets).toEqual(defaultConfig.clock.pellets)
+    expect(b!.layout).toBe('clock')
   })
 })

@@ -1,3 +1,3 @@
-import type { HomeConfigOverrides } from './src/config'
+import type { HomeConfigFile } from './src/config'
 
-export default {} satisfies HomeConfigOverrides
+export default {} satisfies HomeConfigFile

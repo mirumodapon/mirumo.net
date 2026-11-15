@@ -9,6 +9,8 @@ export type DeepPartial<T> = T extends readonly unknown[]
 
 export type HomeConfigOverrides = DeepPartial<HomeConfig>
 
+export type HomeConfigFile = { workspaces?: HomeConfigOverrides[] }
+
 const isPlainObject = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null && !Array.isArray(value)
 
@@ -24,4 +26,9 @@ function merge<T>(base: T, overrides: DeepPartial<T> | undefined): T {
 
 export function resolveConfig(overrides: HomeConfigOverrides): HomeConfig {
   return merge<HomeConfig>(defaultConfig, overrides)
+}
+
+export function resolveWorkspaces(file: HomeConfigFile): HomeConfig[] {
+  const list = file.workspaces?.length ? file.workspaces : [{}]
+  return list.map(resolveConfig)
 }
