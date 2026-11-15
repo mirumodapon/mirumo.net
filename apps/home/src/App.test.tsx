@@ -68,3 +68,40 @@ describe('clock layout', () => {
     expect(html).not.toMatch(datePattern)
   })
 })
+
+describe('default layout', () => {
+  it('shows the marquee, time, weather, links and social footer', () => {
+    const html = render({})
+    for (const text of [
+      'STAGE',
+      'TIME',
+      'WEATHER',
+      'TAIPEI',
+      '24°C',
+      'CLEAR',
+      'FEELS 25°',
+      'HUM 70%',
+      'WIND 12km/h',
+      'TODAY',
+      'LINKS',
+      'Gmail',
+      'href="https://mail.google.com/"',
+      '<footer',
+      'href="https://x.com/"',
+      'target="_blank"',
+    ]) {
+      expect(html).toContain(text)
+    }
+    expect(html).toMatch(/\d{2}:\d{2}/)
+    expect(html).toMatch(datePattern)
+  })
+  it('hides the links panel when there are no links', () => {
+    expect(render({ links: { items: [] } })).not.toContain('LINKS')
+  })
+  it('hides the footer when there are no socials', () => {
+    expect(render({ socials: [] })).not.toContain('<footer')
+  })
+  it('shows the configured weather place', () => {
+    expect(render({ weather: { place: 'TOKYO' } })).toContain('TOKYO')
+  })
+})
