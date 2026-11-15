@@ -34,7 +34,11 @@ describe('SettingsDialog', () => {
       '<option value="default"',
       '<option value="time-only"',
       '<option value="clock"',
-      'value="TAIPEI"',
+      'aria-label="天氣來源"',
+      '<option value="fixed"',
+      '<option value="current"',
+      'aria-label="搜尋城市"',
+      'TAIPEI · 25.0330, 121.5654',
       'aria-label="群組 1 標題"',
       'value="LINKS"',
       'value="Gmail"',
@@ -76,7 +80,10 @@ describe('SettingsDialog', () => {
     expect(tabs).toEqual(['GLOBAL', 'STAGE 0x01', 'STAGE 0x02', 'STAGE 0x03'])
   })
   it('opens on the current workspace tab', () => {
-    const html = renderDialog({ workspaces: [{}, { weather: { place: 'TOKYO' } }] }, 2)
+    const html = renderDialog(
+      { workspaces: [{}, { weather: { source: 'current', place: 'TOKYO' } }] },
+      2,
+    )
     const selected = [...html.matchAll(/role="tab"[^>]*aria-selected="true"[^>]*>([^<]*)</g)]
     expect(selected.map((match) => match[1])).toEqual(['STAGE 0x02'])
     expect(html).toContain('value="TOKYO"')
@@ -84,7 +91,10 @@ describe('SettingsDialog', () => {
   })
   it('keeps every workspace editable in its own panel', () => {
     const html = renderDialog({
-      workspaces: [{ weather: { place: 'TAIPEI' } }, { weather: { place: 'TOKYO' } }],
+      workspaces: [
+        { weather: { source: 'current', place: 'TAIPEI' } },
+        { weather: { source: 'current', place: 'TOKYO' } },
+      ],
     })
     expect(html).toContain('value="TAIPEI"')
     expect(html).toContain('value="TOKYO"')
@@ -140,5 +150,20 @@ describe('workspace settings follow the layout', () => {
     expect(html).toContain('>顯示標題列<')
     for (const text of ['顯示日期', '地點', '＋ 新增群組', '＋ 新增社群'])
       expect(html).not.toContain(text)
+  })
+})
+
+describe('weather settings', () => {
+  it('searches for a city when the source is a fixed place', () => {
+    const html = renderDialog()
+    expect(html).toContain('aria-label="搜尋城市"')
+    expect(html).toContain('>搜尋<')
+    expect(html).not.toContain('aria-label="地點名稱"')
+  })
+  it('only names the place when following the current position', () => {
+    const html = renderDialog({ workspaces: [{ weather: { source: 'current', place: 'HERE' } }] })
+    expect(html).toContain('aria-label="地點名稱"')
+    expect(html).toContain('value="HERE"')
+    expect(html).not.toContain('aria-label="搜尋城市"')
   })
 })

@@ -85,6 +85,22 @@ describe('loadWeather', () => {
     const stored = JSON.parse(storage.data.get(CACHE_KEY)!)
     expect(Object.keys(stored).sort()).toEqual(['25.03,121.57', '35.69,139.69'])
   })
+  it('shares one request between loads for the same place that overlap', async () => {
+    const storage = memoryStorage()
+    const fetchImpl = okFetch()
+    const [a, b] = await Promise.all([
+      loadWeather(taipei, { storage, fetchImpl, now: 7 }),
+      loadWeather({ latitude: 25.0331, longitude: 121.5655 }, { storage, fetchImpl, now: 7 }),
+    ])
+    expect(fetchImpl).toHaveBeenCalledTimes(1)
+    expect(a).toEqual(b)
+  })
+  it('lets a later load fetch again once the shared request has finished', async () => {
+    const fetchImpl = okFetch()
+    await loadWeather(taipei, { fetchImpl, now: 1 })
+    await loadWeather(taipei, { fetchImpl, now: 2 })
+    expect(fetchImpl).toHaveBeenCalledTimes(2)
+  })
   it('works without storage', async () => {
     const result = await loadWeather(taipei, { fetchImpl: okFetch(), now: 5 })
     expect(result.entry.fetchedAt).toBe(5)

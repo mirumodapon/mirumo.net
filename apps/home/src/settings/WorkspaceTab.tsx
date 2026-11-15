@@ -1,7 +1,8 @@
-import { AcButton, AcCheckbox, AcField, AcFieldset, AcInput, AcSelect } from '@mirumo/arcade-ui'
+import { AcButton, AcCheckbox, AcFieldset, AcInput, AcSelect } from '@mirumo/arcade-ui'
 import type { HomeLayout, HomeLinkGroup, WorkspaceConfig } from '../config'
 import { moveItem, removeAt } from './draft'
 import { ListEditor } from './ListEditor'
+import { WeatherSettings } from './WeatherSettings'
 
 const layouts: HomeLayout[] = ['default', 'time-only', 'clock']
 
@@ -68,14 +69,7 @@ export function WorkspaceTab({ workspace, onChange }: WorkspaceTabProps) {
       {layout === 'default' && (
         <>
           <AcFieldset legend="天氣">
-            <AcField label="地點">
-              <AcInput
-                value={workspace.weather.place}
-                onChange={(event) =>
-                  set({ weather: { ...workspace.weather, place: event.target.value } })
-                }
-              />
-            </AcField>
+            <WeatherSettings weather={workspace.weather} onChange={(weather) => set({ weather })} />
           </AcFieldset>
 
           {workspace.linkGroups.map((group, index) => {
