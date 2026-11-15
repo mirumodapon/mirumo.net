@@ -1,14 +1,19 @@
-import { AcPanel, AcScreen } from '@mirumo/arcade-ui'
-import { Clock } from './clock/Clock'
+import { AcScreen } from '@mirumo/arcade-ui'
+import type { ComponentType } from 'react'
+import type { HomeConfig, HomeLayout } from './config'
+import { ClockLayout } from './layouts/ClockLayout'
+import { PanelLayout } from './layouts/PanelLayout'
 
-export function App() {
+const layouts: Record<HomeLayout, ComponentType<{ config: HomeConfig }>> = {
+  panel: PanelLayout,
+  clock: ClockLayout,
+}
+
+export function App({ config }: { config: HomeConfig }) {
+  const Layout = layouts[config.layout]
   return (
-    <AcScreen>
-      <div className="ac:mx-auto ac:max-w-xl">
-        <AcPanel title="TIME" pellets={['tl', 'br']}>
-          <Clock />
-        </AcPanel>
-      </div>
+    <AcScreen scanlines={config.screen.scanlines}>
+      <Layout config={config} />
     </AcScreen>
   )
 }

@@ -241,6 +241,9 @@ importers:
       '@mirumo/arcade-ui':
         specifier: workspace:*
         version: link:../../packages/arcade-ui
+      clsx:
+        specifier: 'catalog:'
+        version: 2.1.1
       react:
         specifier: 'catalog:'
         version: 19.3.1
