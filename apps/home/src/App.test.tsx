@@ -191,6 +191,15 @@ describe('switching workspaces from the STAGE block', () => {
       )
     }
   })
+  it('also shows STAGE on narrow screens, next to 1UP, with the same double tap', () => {
+    const html = renderWith('default', () => {})
+    expect(html).toMatch(
+      /ac:md:hidden[^>]*>(?:(?!<\/div>).)*1UP(?:(?!<\/div>).)*<span[^>]*title="雙擊切換 workspace"[^>]*>(?:(?!<\/div>).)*STAGE/,
+    )
+    expect(html).toMatch(
+      /<div[^>]*ac:md:flex-col[^>]*title="雙擊切換 workspace"|<div(?=[^>]*title="雙擊切換 workspace")(?=[^>]*ac:md:flex)[^>]*>/,
+    )
+  })
   it('adds no hint without a switch handler', () => {
     expect(renderWith('default')).not.toContain('雙擊切換 workspace')
   })

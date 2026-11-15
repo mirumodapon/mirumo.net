@@ -51,11 +51,11 @@ function DoubleClickDemo() {
       end={{
         label: 'STAGE',
         value: `0x${String(stage).padStart(2, '0')}`,
-        hint: 'Double-click to advance',
-        onDoubleClick: () => setStage((value) => (value >= 3 ? 1 : value + 1)),
+        hint: 'Double-tap to advance',
+        onDoubleTap: () => setStage((value) => (value >= 3 ? 1 : value + 1)),
       }}
     />
   )
 }
 
-export const DoubleClick: Story = { render: () => <DoubleClickDemo /> }
+export const DoubleTap: Story = { render: () => <DoubleClickDemo /> }

@@ -6,6 +6,6 @@ export function stageScore({ global, stage, onNextStage }: LayoutProps): AcMarqu
   return {
     label: global.stage.label,
     value: formatStage(stage),
-    ...(onNextStage ? { hint: '雙擊切換 workspace', onDoubleClick: onNextStage } : {}),
+    ...(onNextStage ? { hint: '雙擊切換 workspace', onDoubleTap: onNextStage } : {}),
   }
 }
