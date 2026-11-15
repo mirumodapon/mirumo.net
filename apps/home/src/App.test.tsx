@@ -17,6 +17,9 @@ describe('panel layout', () => {
     expect(html).toContain('TIME')
     expect(html).toMatch(datePattern)
   })
+  it('spans the full screen width', () => {
+    expect(render({})).not.toMatch(/ac:max-w-/)
+  })
   it('uses the configured greeting and title text', () => {
     const html = render({ title: 'ARCADE', player: { text: 'READY' } })
     expect(html).toContain('ARCADE')
