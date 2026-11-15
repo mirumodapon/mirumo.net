@@ -11,6 +11,8 @@
     "typecheck": "tsc"
   },
   "dependencies": {
+    "@fontsource/noto-sans-tc": "catalog:",
+    "@fontsource/press-start-2p": "catalog:",
     "@tabler/icons-webfont": "catalog:",
     "clsx": "catalog:"
   },

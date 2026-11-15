@@ -3,6 +3,8 @@ packages:
   - 'packages/*'
 
 catalog:
+  '@fontsource/noto-sans-tc': ^5.3.1
+  '@fontsource/press-start-2p': ^5.3.0
   '@storybook/addon-docs': ^10.6.7
   '@storybook/react-vite': ^10.6.7
   '@tabler/icons-webfont': ^3.51.0

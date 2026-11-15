@@ -27,6 +27,15 @@
  */
 @import '@tabler/icons-webfont/dist/tabler-icons.min.css' layer(components);
 
+/*
+ * Self-hosted fonts behind --font-pixel and --font-body. Noto Sans TC ships as
+ * unicode-range subsets, so browsers only fetch the CJK ranges a page uses.
+ * Weights match what components use: 400 everywhere, 700 for bold body text.
+ */
+@import '@fontsource/press-start-2p/400.css';
+@import '@fontsource/noto-sans-tc/400.css';
+@import '@fontsource/noto-sans-tc/700.css';
+
 @source './';
 
 @theme static {
