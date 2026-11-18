@@ -83,6 +83,7 @@ describe('defaults', () => {
           { name: 'Blog', url: 'https://blog.mirumo.net', icon: 'brand-blogger' },
           { name: 'Social', url: 'https://social.mirumo.net', icon: 'message-circle' },
           { name: 'Travel Billing', url: 'https://billing.mirumo.net', icon: 'moneybag-edit' },
+          { name: 'Avalon', url: 'https://avalon.mirumo.net', icon: 'swords' },
         ],
       },
     ])
